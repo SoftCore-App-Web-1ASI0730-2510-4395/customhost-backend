@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace disposable.Controllers;
+namespace customhost.platform.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]

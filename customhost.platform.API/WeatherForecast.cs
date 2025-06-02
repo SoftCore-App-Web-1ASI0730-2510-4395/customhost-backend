@@ -1,4 +1,4 @@
-namespace disposable;
+namespace customhost.platform.API;
 
 public class WeatherForecast
 {

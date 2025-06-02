@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "disposable", "disposable\disposable.csproj", "{4FC971DD-7A74-45E2-9893-445108BB4278}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "customhost.platform.API", "customhost.platform.API\customhost.platform.API.csproj", "{4FC971DD-7A74-45E2-9893-445108BB4278}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
