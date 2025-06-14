@@ -1,4 +1,6 @@
+using customhost_backend.crm.Domain.Models.Aggregates;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace customhost_backend.Shared.Infrastructure.Interfaces.Persistence.EFC.Configuration.Extensions;
 
@@ -12,6 +14,9 @@ namespace customhost_backend.Shared.Infrastructure.Interfaces.Persistence.EFC.Co
 /// </remarks>
 public static class ModelBuilderExtensions
 {
+    
+    
+    
     /// <summary>
     ///     Use snake case naming convention
     /// </summary>
