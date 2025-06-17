@@ -1,6 +1,13 @@
 
 using customhost_backend.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using customhost_backend.Shared.Infrastructure.Persistence.EFC.Configuration;
+using customhost_backend.Shared.Infrastructure.Persistence.EFC.Repositories;
+using customhost_backend.Shared.Domain.Repositories;
+using customhost_backend.crm.Domain.Repositories;
+using customhost_backend.crm.Domain.Services;
+using customhost_backend.crm.Application.Internal.CommandServices;
+using customhost_backend.crm.Application.Internal.QueryServices;
+using customhost_backend.crm.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,24 +49,28 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddSwaggerGen(options=> { options.EnableAnnotations(); });
 
+// Dependency Injection
+
+// Shared Bounded Context
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// CRM Bounded Context
+builder.Services.AddScoped<IRoomRespository, RoomRepository>();
+builder.Services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
+builder.Services.AddScoped<IRoomCommandService, RoomCommandService>();
+builder.Services.AddScoped<IRoomQueryService, RoomQueryService>();
+builder.Services.AddScoped<IServiceRequestCommandService, ServiceRequestCommandService>();
+builder.Services.AddScoped<IServiceRequestQueryService, ServiceRequestQueryService>();
+
 
 var app = builder.Build();
 
+// Verify if the database exists and create it if it doesn't
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDbContext>();
-    
-    // En desarrollo, recrear la base de datos si hay cambios en el modelo
-    if (app.Environment.IsDevelopment())
-    {
-        context.Database.EnsureDeleted(); // Elimina la base de datos
-        context.Database.EnsureCreated(); // La recreea con las nuevas tablas
-    }
-    else
-    {
-        context.Database.EnsureCreated(); // Solo crear si no existe en producción
-    }
+    context.Database.EnsureCreated();
 }
 
 // Configure the HTTP request pipeline.
@@ -69,6 +80,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Apply CORS Policy
+app.UseCors("AllowAllPolicy");
 
 app.UseHttpsRedirection();
 
