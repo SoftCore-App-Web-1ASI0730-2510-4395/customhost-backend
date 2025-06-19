@@ -33,7 +33,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="profiles\Interfaces\REST\" />
+      <Folder Include="profiles\Interfaces\REST\Resources\" />
+      <Folder Include="profiles\Interfaces\REST\Transform\" />
     </ItemGroup>
 
 </Project>
