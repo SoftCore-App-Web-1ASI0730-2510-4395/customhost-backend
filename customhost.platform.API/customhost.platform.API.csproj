@@ -32,4 +32,11 @@
         <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.11.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="profiles\Application\Internal\" />
+      <Folder Include="profiles\Domain\" />
+      <Folder Include="profiles\Infrastructure\Persistence\EFC\Repositories\" />
+      <Folder Include="profiles\Interfaces\REST\" />
+    </ItemGroup>
+
 </Project>
