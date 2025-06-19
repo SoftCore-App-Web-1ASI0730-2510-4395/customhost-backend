@@ -32,7 +32,14 @@ using customhost_backend.analytics.Infrastructure.Persistence.EFC.Repositories;
 using customhost_backend.analytics.Infrastructure.ACL.External;
 using Microsoft.EntityFrameworkCore;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsProduction() && builder.Configuration.GetValue<int?>("PORT") is not null)
+    builder.WebHost.UseUrls($"http://*{builder.Configuration.GetValue<int>("PORT")}");
+
+
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
