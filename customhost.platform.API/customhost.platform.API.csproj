@@ -33,7 +33,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="profiles\Application\Internal\" />
       <Folder Include="profiles\Domain\" />
       <Folder Include="profiles\Infrastructure\Persistence\EFC\Repositories\" />
       <Folder Include="profiles\Interfaces\REST\" />
