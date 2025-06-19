@@ -33,7 +33,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="profiles\Domain\Models\Aggregates\" />
       <Folder Include="profiles\Domain\Models\Commands\" />
       <Folder Include="profiles\Domain\Models\ValueObjects\" />
       <Folder Include="profiles\Domain\Repositories\" />
