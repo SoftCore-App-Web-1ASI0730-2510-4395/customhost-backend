@@ -33,7 +33,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="profiles\Domain\Models\" />
+      <Folder Include="profiles\Domain\Models\Aggregates\" />
+      <Folder Include="profiles\Domain\Models\Commands\" />
+      <Folder Include="profiles\Domain\Models\ValueObjects\" />
       <Folder Include="profiles\Domain\Repositories\" />
       <Folder Include="profiles\Domain\Services\" />
       <Folder Include="profiles\Infrastructure\Persistence\EFC\Repositories\" />
