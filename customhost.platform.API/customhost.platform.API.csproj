@@ -32,9 +32,4 @@
         <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.11.0"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="profiles\Interfaces\REST\Resources\" />
-      <Folder Include="profiles\Interfaces\REST\Transform\" />
-    </ItemGroup>
-
 </Project>
