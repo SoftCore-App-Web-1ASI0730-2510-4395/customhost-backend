@@ -33,7 +33,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="profiles\Domain\" />
+      <Folder Include="profiles\Domain\Models\" />
+      <Folder Include="profiles\Domain\Repositories\" />
+      <Folder Include="profiles\Domain\Services\" />
       <Folder Include="profiles\Infrastructure\Persistence\EFC\Repositories\" />
       <Folder Include="profiles\Interfaces\REST\" />
     </ItemGroup>
