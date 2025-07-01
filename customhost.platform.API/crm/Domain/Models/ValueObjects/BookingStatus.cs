@@ -7,7 +7,8 @@ public enum BookingStatus
     CheckedIn,
     CheckedOut,
     Cancelled,
-    NoShow
+    NoShow,
+    Completed // Agregado para reflejar el estado presente en la base de datos
 }
 
 public enum PaymentStatus
