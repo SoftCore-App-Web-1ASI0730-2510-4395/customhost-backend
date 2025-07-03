@@ -6,9 +6,9 @@ namespace customhost_backend.IAM.Interfaces.ACL.Services;
 
 public class IamContextFacade(IUserCommandService userCommandService, IUserQueryService userQueryService) : IIamContextFacade
 {
-    public async Task<int> CreateUser(string username, string password)
+    public async Task<int> CreateUser(string username, string password, string role)
     {
-        var signUpCommand = new SignUpCommand(username, password);
+        var signUpCommand = new SignUpCommand(username, password, role);
         await userCommandService.Handle(signUpCommand);
         var getUserByUsernameQuery = new GetUserByUsernameQuery(username);
         var result = await userQueryService.Handle(getUserByUsernameQuery);
