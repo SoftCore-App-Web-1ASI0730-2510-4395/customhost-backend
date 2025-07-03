@@ -1,14 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>customhost_backend</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <!--<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3"/>-->
         <!-- Dependency Injection related packages -->
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5"/>
         <!-- EntityFrameworkCore Database Persistence related packages -->
@@ -30,6 +28,19 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.11.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5"/>
         <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.11.0"/>
+        <!-- Mediator pattern related packages -->
+        <PackageReference Include="Cortex.Mediator" Version="1.6.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Profiles\Application\" />
+        <Folder Include="Profiles\Domain\Model\Aggregates\" />
+        <Folder Include="Profiles\Domain\Model\Commands\" />
+        <Folder Include="Profiles\Domain\Model\Queries\" />
+        <Folder Include="Profiles\Domain\Repositories\" />
+        <Folder Include="Profiles\Domain\Services\" />
+        <Folder Include="Profiles\Infrastructure\" />
+        <Folder Include="Profiles\Interfaces\" />
     </ItemGroup>
 
 </Project>
