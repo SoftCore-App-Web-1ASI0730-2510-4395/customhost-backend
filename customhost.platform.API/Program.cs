@@ -207,11 +207,13 @@ builder.Services.AddScoped<IUserDevicePreferenceQueryService, UserDevicePreferen
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 // Dependency Injection for IAM Bounded Context
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRolRepository, RolRepository>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+builder.Services.AddScoped<RoleInitializationService>();
 
 // Mediator Configuration
 
@@ -236,6 +238,10 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDbContext>();
     context.Database.EnsureCreated();
+    
+    // Initialize default roles
+    var roleInitializationService = services.GetRequiredService<RoleInitializationService>();
+    await roleInitializationService.InitializeDefaultRolesAsync();
 }
 
 // Configure the HTTP request pipeline.

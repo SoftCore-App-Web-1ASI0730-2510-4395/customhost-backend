@@ -2,6 +2,7 @@ using customhost_backend.crm.Domain.Models.Aggregates;
 using customhost_backend.GuestExperience.Domain.Model.Aggregates;
 using customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.crm.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using customhost_backend.IAM.Domain.Model.Aggregates;
 using customhost_backend.IAM.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.Shared.Infrastructure.Interfaces.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
@@ -18,6 +19,10 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<StaffMember> StaffMembers { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    
+    // IAM DbSets
+    public DbSet<User> Users { get; set; }
+    public DbSet<Rol> Roles { get; set; }
     
     // Guest Experience DbSets
     public DbSet<IoTDevice> IoTDevices { get; set; }

@@ -1,4 +1,6 @@
-using System.Text.Json.Serialization;
+    using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace customhost_backend.IAM.Domain.Model.Aggregates;
 
@@ -10,16 +12,32 @@ namespace customhost_backend.IAM.Domain.Model.Aggregates;
  *     This class is used to represent a user
  * </remarks>
  */
-public partial class User(string username, string passwordHash)
+[Table("users")]
+public partial class User(string username, string passwordHash, int rolId)
 {
-    public User() : this(string.Empty, string.Empty)
+    public User() : this(string.Empty, string.Empty, 1) // Default to role ID 1 (GUEST)
     {
     }
 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; }
+    
+    [Required]
     public string Username { get; private set; } = username;
 
-    [JsonIgnore] public string PasswordHash { get; private set; } = passwordHash;
+    [JsonIgnore] 
+    [Required]
+    public string PasswordHash { get; private set; } = passwordHash;
+
+    [Column("rol_id")]
+    [ForeignKey("Rol")]
+    [Required]
+    public int RolId { get; private set; } = rolId;
+
+    // Navigation property
+    [Required]
+    public virtual Rol Rol { get; set; } = null!;
 
     /**
      * <summary>
@@ -44,6 +62,19 @@ public partial class User(string username, string passwordHash)
     public User UpdatePasswordHash(string passwordHash)
     {
         PasswordHash = passwordHash;
+        return this;
+    }
+
+    /**
+     * <summary>
+     *     Update the role
+     * </summary>
+     * <param name="rolId">The new role ID</param>
+     * <returns>The updated user</returns>
+     */
+    public User UpdateRole(int rolId)
+    {
+        RolId = rolId;
         return this;
     }
 }
