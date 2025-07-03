@@ -12,141 +12,141 @@ namespace customhost_backend.profiles.Interfaces.REST;
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-[Tags("Users")]
-public class UsersController(
-    IUserCommandService userCommandService,
-    IUserQueryService userQueryService)
+[Tags("Profiles")]
+public class ProfilesController(
+    IProfileCommandService ProfileCommandService,
+    IProfileQueryService ProfileQueryService)
     : ControllerBase
 {
     [HttpPost]
     [SwaggerOperation(
-        Summary = "Create a new user",
-        Description = "Creates a new user with the specified details.",
-        OperationId = "CreateUser")]
-    [SwaggerResponse(201, "User created successfully", typeof(UserResource))]
-    [SwaggerResponse(400, "User can't be created.", null)]
-    public async Task<ActionResult> CreateUser([FromBody] CreateUserResource userResource)
+        Summary = "Create a new Profile",
+        Description = "Creates a new Profile with the specified details.",
+        OperationId = "CreateProfile")]
+    [SwaggerResponse(201, "Profile created successfully", typeof(ProfileResource))]
+    [SwaggerResponse(400, "Profile can't be created.", null)]
+    public async Task<ActionResult> CreateProfile([FromBody] CreateProfileResource ProfileResource)
     {
-        var command = CreateUserCommandFromResourceAssembler.ToCommandFromResource(userResource);
-        var result = await userCommandService.Handle(command);
+        var command = CreateProfileCommandFromResourceAssembler.ToCommandFromResource(ProfileResource);
+        var result = await ProfileCommandService.Handle(command);
         if (result == null)
-            return BadRequest("User could not be created. Email might already exist.");
+            return BadRequest("Profile could not be created. Email might already exist.");
 
-        return CreatedAtAction(nameof(GetUserById), new { id = result.Id }, 
-            UserResourceFromEntityAssembler.ToResourceFromEntity(result));
+        return CreatedAtAction(nameof(GetProfileById), new { id = result.Id }, 
+            ProfileResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
 
     [HttpGet]
     [SwaggerOperation(
-        Summary = "Get all users",
-        Description = "Retrieves a list of all users.",
-        OperationId = "GetUsers")]
-    [SwaggerResponse(200, "Users retrieved successfully", typeof(IEnumerable<UserResource>))]
-    public async Task<ActionResult> GetUsers()
+        Summary = "Get all Profiles",
+        Description = "Retrieves a list of all Profiles.",
+        OperationId = "GetProfiles")]
+    [SwaggerResponse(200, "Profiles retrieved successfully", typeof(IEnumerable<ProfileResource>))]
+    public async Task<ActionResult> GetProfiles()
     {
-        var users = (await userQueryService.GetAllAsync()).ToList();
-        var resources = UserResourceFromEntityAssembler.ToResourcesFromEntities(users);
+        var Profiles = (await ProfileQueryService.GetAllAsync()).ToList();
+        var resources = ProfileResourceFromEntityAssembler.ToResourcesFromEntities(Profiles);
         return Ok(resources);
     }
 
     [HttpGet("{id:int}")]
     [SwaggerOperation(
-        Summary = "Get user by ID",
-        Description = "Retrieves a specific user by their ID.",
-        OperationId = "GetUserById")]
-    [SwaggerResponse(200, "User retrieved successfully", typeof(UserResource))]
-    [SwaggerResponse(404, "User not found", null)]
-    public async Task<ActionResult> GetUserById(int id)
+        Summary = "Get Profile by ID",
+        Description = "Retrieves a specific Profile by their ID.",
+        OperationId = "GetProfileById")]
+    [SwaggerResponse(200, "Profile retrieved successfully", typeof(ProfileResource))]
+    [SwaggerResponse(404, "Profile not found", null)]
+    public async Task<ActionResult> GetProfileById(int id)
     {
-        var user = await userQueryService.GetByIdAsync(id);
-        if (user == null)
-            return NotFound($"User with ID {id} not found.");
+        var Profile = await ProfileQueryService.GetByIdAsync(id);
+        if (Profile == null)
+            return NotFound($"Profile with ID {id} not found.");
 
-        var resource = UserResourceFromEntityAssembler.ToResourceFromEntity(user);
+        var resource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(Profile);
         return Ok(resource);
     }
 
     [HttpGet("email/{email}")]
     [SwaggerOperation(
-        Summary = "Get user by email",
-        Description = "Retrieves a specific user by their email address.",
-        OperationId = "GetUserByEmail")]
-    [SwaggerResponse(200, "User retrieved successfully", typeof(UserResource))]
-    [SwaggerResponse(404, "User not found", null)]
-    public async Task<ActionResult> GetUserByEmail(string email)
+        Summary = "Get Profile by email",
+        Description = "Retrieves a specific Profile by their email address.",
+        OperationId = "GetProfileByEmail")]
+    [SwaggerResponse(200, "Profile retrieved successfully", typeof(ProfileResource))]
+    [SwaggerResponse(404, "Profile not found", null)]
+    public async Task<ActionResult> GetProfileByEmail(string email)
     {
-        var user = await userQueryService.GetByEmailAsync(email);
-        if (user == null)
-            return NotFound($"User with email {email} not found.");
+        var Profile = await ProfileQueryService.GetByEmailAsync(email);
+        if (Profile == null)
+            return NotFound($"Profile with email {email} not found.");
 
-        var resource = UserResourceFromEntityAssembler.ToResourceFromEntity(user);
+        var resource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(Profile);
         return Ok(resource);
     }
 
     [HttpGet("hotel/{hotelId:int}")]
     [SwaggerOperation(
-        Summary = "Get users by hotel ID",
-        Description = "Retrieves all users for a specific hotel.",
-        OperationId = "GetUsersByHotelId")]
-    [SwaggerResponse(200, "Users retrieved successfully", typeof(IEnumerable<UserResource>))]
-    public async Task<ActionResult> GetUsersByHotelId(int hotelId)
+        Summary = "Get Profiles by hotel ID",
+        Description = "Retrieves all Profiles for a specific hotel.",
+        OperationId = "GetProfilesByHotelId")]
+    [SwaggerResponse(200, "Profiles retrieved successfully", typeof(IEnumerable<ProfileResource>))]
+    public async Task<ActionResult> GetProfilesByHotelId(int hotelId)
     {
-        var users = (await userQueryService.GetByHotelIdAsync(hotelId)).ToList();
-        var resources = UserResourceFromEntityAssembler.ToResourcesFromEntities(users);
+        var Profiles = (await ProfileQueryService.GetByHotelIdAsync(hotelId)).ToList();
+        var resources = ProfileResourceFromEntityAssembler.ToResourcesFromEntities(Profiles);
         return Ok(resources);
     }
 
     [HttpGet("role/{role}")]
     [SwaggerOperation(
-        Summary = "Get users by role",
-        Description = "Retrieves all users with a specific role.",
-        OperationId = "GetUsersByRole")]
-    [SwaggerResponse(200, "Users retrieved successfully", typeof(IEnumerable<UserResource>))]
+        Summary = "Get Profiles by role",
+        Description = "Retrieves all Profiles with a specific role.",
+        OperationId = "GetProfilesByRole")]
+    [SwaggerResponse(200, "Profiles retrieved successfully", typeof(IEnumerable<ProfileResource>))]
     [SwaggerResponse(400, "Invalid role value", null)]
-    public async Task<ActionResult> GetUsersByRole(string role)
+    public async Task<ActionResult> GetProfilesByRole(string role)
     {
-        if (!Enum.TryParse<EUserRole>(role, true, out var roleEnum))
+        if (!Enum.TryParse<EProfileRole>(role, true, out var roleEnum))
             return BadRequest($"Invalid role value: {role}");
 
-        var users = (await userQueryService.GetByRoleAsync(roleEnum)).ToList();
-        var resources = UserResourceFromEntityAssembler.ToResourcesFromEntities(users);
+        var Profiles = (await ProfileQueryService.GetByRoleAsync(roleEnum)).ToList();
+        var resources = ProfileResourceFromEntityAssembler.ToResourcesFromEntities(Profiles);
         return Ok(resources);
     }
 
     [HttpPut("{id:int}")]
     [SwaggerOperation(
-        Summary = "Update a user",
-        Description = "Updates an existing user with new information.",
-        OperationId = "UpdateUser")]
-    [SwaggerResponse(200, "User updated successfully", typeof(UserResource))]
-    [SwaggerResponse(404, "User not found", null)]
-    [SwaggerResponse(400, "User update failed", null)]
-    public async Task<ActionResult> UpdateUser(int id, [FromBody] UpdateUserResource updateResource)
+        Summary = "Update a Profile",
+        Description = "Updates an existing Profile with new information.",
+        OperationId = "UpdateProfile")]
+    [SwaggerResponse(200, "Profile updated successfully", typeof(ProfileResource))]
+    [SwaggerResponse(404, "Profile not found", null)]
+    [SwaggerResponse(400, "Profile update failed", null)]
+    public async Task<ActionResult> UpdateProfile(int id, [FromBody] UpdateProfileResource updateResource)
     {
-        var command = UpdateUserCommandFromResourceAssembler.ToCommandFromResource(id, updateResource);
-        var result = await userCommandService.Handle(command);
+        var command = UpdateProfileCommandFromResourceAssembler.ToCommandFromResource(id, updateResource);
+        var result = await ProfileCommandService.Handle(command);
         if (result == null)
-            return NotFound($"User with ID {id} not found or email already exists.");
+            return NotFound($"Profile with ID {id} not found or email already exists.");
 
-        var resource = UserResourceFromEntityAssembler.ToResourceFromEntity(result);
+        var resource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(result);
         return Ok(resource);
     }
 
     [HttpDelete("{id:int}")]
     [SwaggerOperation(
-        Summary = "Delete user",
-        Description = "Deletes a user from the system.",
-        OperationId = "DeleteUser")]
-    [SwaggerResponse(200, "User deleted successfully")]
-    [SwaggerResponse(404, "User not found", null)]
-    [SwaggerResponse(400, "User deletion failed", null)]
-    public async Task<ActionResult> DeleteUser(int id)
+        Summary = "Delete Profile",
+        Description = "Deletes a Profile from the system.",
+        OperationId = "DeleteProfile")]
+    [SwaggerResponse(200, "Profile deleted successfully")]
+    [SwaggerResponse(404, "Profile not found", null)]
+    [SwaggerResponse(400, "Profile deletion failed", null)]
+    public async Task<ActionResult> DeleteProfile(int id)
     {
-        var command = new DeleteUserCommand(id);
-        var result = await userCommandService.Handle(command);
+        var command = new DeleteProfileCommand(id);
+        var result = await ProfileCommandService.Handle(command);
         if (!result)
-            return NotFound($"User with ID {id} not found.");
+            return NotFound($"Profile with ID {id} not found.");
 
-        return Ok($"User with ID {id} deleted successfully.");
+        return Ok($"Profile with ID {id} deleted successfully.");
     }
 }

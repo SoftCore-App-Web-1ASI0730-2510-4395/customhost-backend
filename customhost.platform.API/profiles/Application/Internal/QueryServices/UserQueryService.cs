@@ -6,38 +6,38 @@ using customhost_backend.profiles.Domain.Services;
 namespace customhost_backend.profiles.Application.Internal.QueryServices;
 
 /// <summary>
-/// User Query Service Implementation
+/// Profile Query Service Implementation
 /// </summary>
-public class UserQueryService(IUserRepository userRepository) 
-    : IUserQueryService
+public class ProfileQueryService(IProfileRepository ProfileRepository) 
+    : IProfileQueryService
 {
     /// <inheritdoc />
-    public async Task<IEnumerable<User>> GetAllAsync()
+    public async Task<IEnumerable<Profile>> GetAllAsync()
     {
-        return await userRepository.ListAsync();
+        return await ProfileRepository.ListAsync();
     }
 
     /// <inheritdoc />
-    public async Task<User?> GetByIdAsync(int id)
+    public async Task<Profile?> GetByIdAsync(int id)
     {
-        return await userRepository.FindByIdAsync(id);
+        return await ProfileRepository.FindByIdAsync(id);
     }
 
     /// <inheritdoc />
-    public async Task<User?> GetByEmailAsync(string email)
+    public async Task<Profile?> GetByEmailAsync(string email)
     {
-        return await userRepository.FindByEmailAsync(email);
+        return await ProfileRepository.FindByEmailAsync(email);
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<User>> GetByHotelIdAsync(int hotelId)
+    public async Task<IEnumerable<Profile>> GetByHotelIdAsync(int hotelId)
     {
-        return await userRepository.FindByHotelIdAsync(hotelId);
+        return await ProfileRepository.FindByHotelIdAsync(hotelId);
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<User>> GetByRoleAsync(EUserRole role)
+    public async Task<IEnumerable<Profile>> GetByRoleAsync(EProfileRole role)
     {
-        return await userRepository.FindByRoleAsync(role);
+        return await ProfileRepository.FindByRoleAsync(role);
     }
 }

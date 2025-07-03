@@ -7,25 +7,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace customhost_backend.profiles.Infrastructure.Persistence.EFC.Repositories;
 
-public class UserRepository(AppDbContext context) 
-    : BaseRepository<User>(context), IUserRepository
+public class ProfileRepository(AppDbContext context) 
+    : BaseRepository<Profile>(context), IProfileRepository
 {
-    public async Task<User?> FindByEmailAsync(string email)
+    public async Task<Profile?> FindByEmailAsync(string email)
     {
-        return await Context.Set<User>()
+        return await Context.Set<Profile>()
             .FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public async Task<IEnumerable<User>> FindByHotelIdAsync(int hotelId)
+    public async Task<IEnumerable<Profile>> FindByHotelIdAsync(int hotelId)
     {
-        return await Context.Set<User>()
+        return await Context.Set<Profile>()
             .Where(u => u.HotelId == hotelId)
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<User>> FindByRoleAsync(EUserRole role)
+    public async Task<IEnumerable<Profile>> FindByRoleAsync(EProfileRole role)
     {
-        return await Context.Set<User>()
+        return await Context.Set<Profile>()
             .Where(u => u.Role == role)
             .ToListAsync();
     }

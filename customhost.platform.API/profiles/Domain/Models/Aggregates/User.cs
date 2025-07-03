@@ -4,13 +4,13 @@ using customhost_backend.profiles.Domain.Models.ValueObjects;
 namespace customhost_backend.profiles.Domain.Models.Aggregates;
 
 /// <summary>
-/// User Aggregate Root 
+/// Profile Aggregate Root 
 /// </summary>
 /// <remarks>
-/// This class represents the User aggregate root.
-/// It contains the properties and methods to manage user information.
+/// This class represents the Profile aggregate root.
+/// It contains the properties and methods to manage Profile information.
 /// </remarks>
-public class User
+public class Profile
 {
     public int Id { get; private set; }
     public int HotelId { get; private set; }
@@ -19,13 +19,13 @@ public class User
     public string Email { get; private set; } = string.Empty;
     public string PasswordHash { get; private set; } = string.Empty;
     public string Phone { get; private set; } = string.Empty;
-    public EUserRole Role { get; private set; }
+    public EProfileRole Role { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
     // For EF Core
-    protected User() { }
+    protected Profile() { }
 
-    public User(CreateUserCommand command)
+    public Profile(CreateProfileCommand command)
     {
         HotelId = command.HotelId;
         FirstName = command.FirstName;
@@ -37,7 +37,7 @@ public class User
         CreatedAt = DateTime.UtcNow;
     }
 
-    public void UpdateUser(UpdateUserCommand command)
+    public void UpdateProfile(UpdateProfileCommand command)
     {
         if (command.HotelId.HasValue)
             HotelId = command.HotelId.Value;
@@ -65,9 +65,9 @@ public class User
 
     // Business logic properties
     public string FullName => $"{FirstName} {LastName}";
-    public bool IsGuest => Role == EUserRole.Guest;
-    public bool IsStaff => Role == EUserRole.Staff;
-    public bool IsAdmin => Role == EUserRole.Admin;
+    public bool IsGuest => Role == EProfileRole.Guest;
+    public bool IsStaff => Role == EProfileRole.Staff;
+    public bool IsAdmin => Role == EProfileRole.Admin;
 
     // Simple password hashing - in production use BCrypt or similar
     private string HashPassword(string password)

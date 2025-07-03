@@ -4,9 +4,9 @@ using customhost_backend.Shared.Domain.Repositories;
 
 namespace customhost_backend.profiles.Domain.Repositories;
 
-public interface IUserRepository : IBaseRepository<User>
+public interface IProfileRepository : IBaseRepository<Profile>
 {
-    Task<User?> FindByEmailAsync(string email);
-    Task<IEnumerable<User>> FindByHotelIdAsync(int hotelId);
-    Task<IEnumerable<User>> FindByRoleAsync(EUserRole role);
+    Task<Profile?> FindByEmailAsync(string email);
+    Task<IEnumerable<Profile>> FindByHotelIdAsync(int hotelId);
+    Task<IEnumerable<Profile>> FindByRoleAsync(EProfileRole role);
 }

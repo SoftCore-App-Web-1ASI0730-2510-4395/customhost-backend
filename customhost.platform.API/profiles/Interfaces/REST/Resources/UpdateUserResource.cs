@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace customhost_backend.profiles.Interfaces.REST.Resources;
 
-public record UpdateUserResource
+public record UpdateProfileResource
 {
     [Range(1, int.MaxValue, ErrorMessage = "Hotel ID must be a positive integer.")]
     public int? HotelId { get; set; }

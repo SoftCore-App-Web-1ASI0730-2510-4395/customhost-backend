@@ -3,24 +3,24 @@ using customhost_backend.profiles.Interfaces.REST.Resources;
 
 namespace customhost_backend.profiles.Interfaces.REST.Transform;
 
-public static class UserResourceFromEntityAssembler
+public static class ProfileResourceFromEntityAssembler
 {
-    public static UserResource ToResourceFromEntity(User user)
+    public static ProfileResource ToResourceFromEntity(Profile Profile)
     {
-        return new UserResource(
-            user.Id,
-            user.HotelId,
-            user.FirstName,
-            user.LastName,
-            user.Email,
-            user.Phone,
-            user.Role.ToString(),
-            user.CreatedAt
+        return new ProfileResource(
+            Profile.Id,
+            Profile.HotelId,
+            Profile.FirstName,
+            Profile.LastName,
+            Profile.Email,
+            Profile.Phone,
+            Profile.Role.ToString(),
+            Profile.CreatedAt
         );
     }
 
-    public static List<UserResource> ToResourcesFromEntities(IEnumerable<User> users)
+    public static List<ProfileResource> ToResourcesFromEntities(IEnumerable<Profile> Profiles)
     {
-        return users.Select(user => ToResourceFromEntity(user)).ToList();
+        return Profiles.Select(Profile => ToResourceFromEntity(Profile)).ToList();
     }
 }

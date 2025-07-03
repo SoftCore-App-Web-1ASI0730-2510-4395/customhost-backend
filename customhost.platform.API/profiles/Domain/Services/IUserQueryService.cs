@@ -4,41 +4,41 @@ using customhost_backend.profiles.Domain.Models.ValueObjects;
 namespace customhost_backend.profiles.Domain.Services;
 
 /// <summary>
-/// User Query Service Interface
+/// Profile Query Service Interface
 /// </summary>
-public interface IUserQueryService
+public interface IProfileQueryService
 {
     /// <summary>
-    /// Get all users
+    /// Get all Profiles
     /// </summary>
-    /// <returns>All users</returns>
-    Task<IEnumerable<User>> GetAllAsync();
+    /// <returns>All Profiles</returns>
+    Task<IEnumerable<Profile>> GetAllAsync();
     
     /// <summary>
-    /// Get user by ID
+    /// Get Profile by ID
     /// </summary>
-    /// <param name="id">User ID</param>
-    /// <returns>User or null if not found</returns>
-    Task<User?> GetByIdAsync(int id);
+    /// <param name="id">Profile ID</param>
+    /// <returns>Profile or null if not found</returns>
+    Task<Profile?> GetByIdAsync(int id);
     
     /// <summary>
-    /// Get user by email
+    /// Get Profile by email
     /// </summary>
-    /// <param name="email">User email</param>
-    /// <returns>User or null if not found</returns>
-    Task<User?> GetByEmailAsync(string email);
+    /// <param name="email">Profile email</param>
+    /// <returns>Profile or null if not found</returns>
+    Task<Profile?> GetByEmailAsync(string email);
     
     /// <summary>
-    /// Get users by hotel ID
+    /// Get Profiles by hotel ID
     /// </summary>
     /// <param name="hotelId">Hotel ID</param>
-    /// <returns>Hotel users</returns>
-    Task<IEnumerable<User>> GetByHotelIdAsync(int hotelId);
+    /// <returns>Hotel Profiles</returns>
+    Task<IEnumerable<Profile>> GetByHotelIdAsync(int hotelId);
     
     /// <summary>
-    /// Get users by role
+    /// Get Profiles by role
     /// </summary>
-    /// <param name="role">User role</param>
-    /// <returns>Users with the specified role</returns>
-    Task<IEnumerable<User>> GetByRoleAsync(EUserRole role);
+    /// <param name="role">Profile role</param>
+    /// <returns>Profiles with the specified role</returns>
+    Task<IEnumerable<Profile>> GetByRoleAsync(EProfileRole role);
 }
