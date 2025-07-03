@@ -4,15 +4,15 @@ using customhost_backend.profiles.Interfaces.REST.Resources;
 
 namespace customhost_backend.profiles.Interfaces.REST.Transform;
 
-public static class UpdateUserCommandFromResourceAssembler
+public static class UpdateProfileCommandFromResourceAssembler
 {
-    public static UpdateUserCommand ToCommandFromResource(int id, UpdateUserResource resource)
+    public static UpdateProfileCommand ToCommandFromResource(int id, UpdateProfileResource resource)
     {
-        EUserRole? role = null;
-        if (!string.IsNullOrEmpty(resource.Role) && Enum.TryParse<EUserRole>(resource.Role, true, out var parsedRole))
+        EProfileRole? role = null;
+        if (!string.IsNullOrEmpty(resource.Role) && Enum.TryParse<EProfileRole>(resource.Role, true, out var parsedRole))
             role = parsedRole;
 
-        return new UpdateUserCommand(
+        return new UpdateProfileCommand(
             id,
             resource.HotelId,
             resource.FirstName,

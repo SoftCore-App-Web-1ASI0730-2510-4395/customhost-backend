@@ -4,28 +4,28 @@ using customhost_backend.profiles.Domain.Models.Commands;
 namespace customhost_backend.profiles.Domain.Services;
 
 /// <summary>
-/// User Command Service Interface
+/// Profile Command Service Interface
 /// </summary>
-public interface IUserCommandService
+public interface IProfileCommandService
 {
     /// <summary>
-    /// Handle create user command
+    /// Handle create Profile command
     /// </summary>
-    /// <param name="command">Create user command</param>
-    /// <returns>Created user or null if failed</returns>
-    Task<User?> Handle(CreateUserCommand command);
+    /// <param name="command">Create Profile command</param>
+    /// <returns>Created Profile or null if failed</returns>
+    Task<Profile?> Handle(CreateProfileCommand command);
     
     /// <summary>
-    /// Handle update user command
+    /// Handle update Profile command
     /// </summary>
-    /// <param name="command">Update user command</param>
-    /// <returns>Updated user or null if failed</returns>
-    Task<User?> Handle(UpdateUserCommand command);
+    /// <param name="command">Update Profile command</param>
+    /// <returns>Updated Profile or null if failed</returns>
+    Task<Profile?> Handle(UpdateProfileCommand command);
     
     /// <summary>
-    /// Handle delete user command
+    /// Handle delete Profile command
     /// </summary>
-    /// <param name="command">Delete user command</param>
+    /// <param name="command">Delete Profile command</param>
     /// <returns>True if deleted, false otherwise</returns>
-    Task<bool> Handle(DeleteUserCommand command);
+    Task<bool> Handle(DeleteProfileCommand command);
 }

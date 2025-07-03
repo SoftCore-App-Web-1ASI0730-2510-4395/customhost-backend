@@ -4,14 +4,14 @@ using customhost_backend.profiles.Interfaces.REST.Resources;
 
 namespace customhost_backend.profiles.Interfaces.REST.Transform;
 
-public static class CreateUserCommandFromResourceAssembler
+public static class CreateProfileCommandFromResourceAssembler
 {
-    public static CreateUserCommand ToCommandFromResource(CreateUserResource resource)
+    public static CreateProfileCommand ToCommandFromResource(CreateProfileResource resource)
     {
-        if (!Enum.TryParse<EUserRole>(resource.Role, true, out var role))
-            role = EUserRole.Guest;
+        if (!Enum.TryParse<EProfileRole>(resource.Role, true, out var role))
+            role = EProfileRole.Guest;
 
-        return new CreateUserCommand(
+        return new CreateProfileCommand(
             resource.HotelId ?? 0,
             resource.FirstName ?? "",
             resource.LastName ?? "",

@@ -1,6 +1,6 @@
 namespace customhost_backend.profiles.Domain.Models.ValueObjects;
 
-public enum EUserRole
+public enum EProfileRole
 {
     Guest,
     Staff,

@@ -1,6 +1,6 @@
 namespace customhost_backend.profiles.Interfaces.REST.Resources;
 
-public record UserResource(
+public record ProfileResource(
     int Id,
     int HotelId,
     string FirstName,

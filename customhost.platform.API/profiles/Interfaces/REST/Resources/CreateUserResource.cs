@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace customhost_backend.profiles.Interfaces.REST.Resources;
 
-public record CreateUserResource
+public record CreateProfileResource
 {
     [Required(ErrorMessage = "Hotel ID is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "Hotel ID must be a positive integer.")]

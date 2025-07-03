@@ -1,3 +1,5 @@
+using Cortex.Mediator.Commands;
+using Cortex.Mediator.DependencyInjection;
 using customhost_backend.GuestExperience.Application.Internal.CommandServices;
 using customhost_backend.GuestExperience.Application.Internal.QueryServices;
 using customhost_backend.GuestExperience.Domain.Repositories;
@@ -30,7 +32,21 @@ using customhost_backend.analytics.Domain.Services.External;
 using customhost_backend.analytics.Application.Internal.QueryServices;
 using customhost_backend.analytics.Infrastructure.Persistence.EFC.Repositories;
 using customhost_backend.analytics.Infrastructure.ACL.External;
+using customhost_backend.IAM.Application.Internal.CommandServices;
+using customhost_backend.IAM.Application.Internal.OutboundServices;
+using customhost_backend.IAM.Application.Internal.QueryServices;
+using customhost_backend.IAM.Domain.Repositories;
+using customhost_backend.IAM.Domain.Services;
+using customhost_backend.IAM.Infrastructure.Hashing.BCrypt.Services;
+using customhost_backend.IAM.Infrastructure.Persistence.EFC.Repositories;
+using customhost_backend.IAM.Infrastructure.Pipeline.Middleware.Extensions;
+using customhost_backend.IAM.Infrastructure.Tokens.JWT.Configuration;
+using customhost_backend.IAM.Infrastructure.Tokens.JWT.Services;
+using customhost_backend.IAM.Interfaces.ACL;
+using customhost_backend.IAM.Interfaces.ACL.Services;
+using customhost_backend.Shared.Infrastructure.Mediator.Cortex.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 
 
@@ -87,7 +103,33 @@ builder.Services.AddDbContext<AppDbContext>(options =>
             .LogTo(Console.WriteLine, LogLevel.Error);
 });
 
-builder.Services.AddSwaggerGen(options=> { options.EnableAnnotations(); });
+builder.Services.AddSwaggerGen(options =>
+{
+    options.EnableAnnotations(); 
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 // Dependency Injection
 
@@ -119,10 +161,13 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentCommandService, PaymentCommandService>();
 builder.Services.AddScoped<IPaymentQueryService, PaymentQueryService>();
 
+
 // Profiles Bounded Context
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserCommandService, UserCommandService>();
-builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IProfileCommandService, ProfileCommandService>();
+builder.Services.AddScoped<IProfileQueryService, ProfileQueryService>();
+
+
 
 // Analytics Bounded Context
 // Repositories
@@ -158,6 +203,31 @@ builder.Services.AddScoped<IRoomDevicePreferenceQueryService, RoomDevicePreferen
 builder.Services.AddScoped<IUserDevicePreferenceQueryService, UserDevicePreferenceQueryService>();
 
 
+// TokenSettings Configuration
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+// Dependency Injection for IAM Bounded Context
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
+builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
+// Mediator Configuration
+
+// Add Mediator Injection Configuration
+builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
+
+// Add Cortex Mediator for Event Handling
+builder.Services.AddCortexMediator(
+    configuration: builder.Configuration,
+    handlerAssemblyMarkerTypes: new[] { typeof(Program) }, configure: options =>
+    {
+        options.AddOpenCommandPipelineBehavior(typeof(LoggingCommandBehavior<>));
+        //options.AddDefaultBehaviors();
+    });
+
+
 var app = builder.Build();
 
 // Verify if the database exists and create it if it doesn't
@@ -184,6 +254,9 @@ else
 {
     app.UseCors("AllowFrontendPolicy"); // Restricted to frontend origins
 }
+
+app.UseRequestAuthorization();
+
 
 app.UseHttpsRedirection();
 

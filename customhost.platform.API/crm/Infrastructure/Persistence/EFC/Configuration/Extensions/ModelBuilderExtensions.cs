@@ -100,18 +100,18 @@ public static class ModelBuilderExtensions
         builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().ToTable("payments");
         
         // User
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().HasKey(u => u.Id);
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.HotelId).IsRequired();
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.FirstName).IsRequired().HasMaxLength(100);
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.LastName).IsRequired().HasMaxLength(100);
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Email).IsRequired().HasMaxLength(255);
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(500);
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Phone).IsRequired().HasMaxLength(20);
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Role).IsRequired().HasConversion<string>();
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.CreatedAt).IsRequired().HasColumnType("datetime");
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().HasIndex(u => u.Email).IsUnique();
-        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().ToTable("users");
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().HasKey(u => u.Id);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.HotelId).IsRequired();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.FirstName).IsRequired().HasMaxLength(100);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.LastName).IsRequired().HasMaxLength(100);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.Email).IsRequired().HasMaxLength(255);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(500);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.Phone).IsRequired().HasMaxLength(20);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.Role).IsRequired().HasConversion<string>();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().Property(u => u.CreatedAt).IsRequired().HasColumnType("datetime");
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().HasIndex(u => u.Email).IsUnique();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.Profile>().ToTable("profiles");
         
         // Analytics Bounded Context
         builder.ApplyConfiguration(new customhost_backend.analytics.Infrastructure.Persistence.EFC.Configuration.AnalyticsSnapshotConfiguration());
