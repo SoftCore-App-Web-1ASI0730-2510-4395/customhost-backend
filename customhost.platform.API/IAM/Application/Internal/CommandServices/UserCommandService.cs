@@ -1,6 +1,7 @@
 using customhost_backend.IAM.Application.Internal.OutboundServices;
 using customhost_backend.IAM.Domain.Model.Aggregates;
 using customhost_backend.IAM.Domain.Model.Commands;
+using customhost_backend.IAM.Domain.Model.ValueObjects;
 using customhost_backend.IAM.Domain.Repositories;
 using customhost_backend.IAM.Domain.Services;
 using customhost_backend.Shared.Domain.Repositories;
@@ -19,6 +20,7 @@ namespace customhost_backend.IAM.Application.Internal.CommandServices;
  */
 public class UserCommandService(
     IUserRepository userRepository,
+    IRolRepository rolRepository,
     ITokenService tokenService,
     IHashingService hashingService,
     IUnitOfWork unitOfWork)
@@ -55,8 +57,18 @@ public class UserCommandService(
         if (userRepository.ExistsByUsername(command.Username))
             throw new Exception($"Username {command.Username} is already taken");
 
+        // Parse and validate role
+        if (!Enum.TryParse<ERoles>(command.Role, true, out var roleEnum))
+            throw new Exception($"Invalid role: {command.Role}. Valid roles are: {string.Join(", ", Enum.GetNames<ERoles>())}");
+
+        // Find the role in the database
+        var role = await rolRepository.FindByRoleNameAsync(roleEnum);
+        if (role == null)
+            throw new Exception($"Role {command.Role} not found in the system");
+
         var hashedPassword = hashingService.HashPassword(command.Password);
-        var user = new User(command.Username, hashedPassword);
+        var user = new User(command.Username, hashedPassword, role.Id);
+        
         try
         {
             await userRepository.AddAsync(user);
