@@ -2,6 +2,7 @@ using customhost_backend.crm.Domain.Models.Aggregates;
 using customhost_backend.GuestExperience.Domain.Model.Aggregates;
 using customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.crm.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using customhost_backend.IAM.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.Shared.Infrastructure.Interfaces.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,8 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         
         builder.ApplyCrmConfiguration();
         builder.ApplyGuestExperienceConfiguration();
+        
+        builder.ApplyIamConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
     }
