@@ -5,6 +5,7 @@ using customhost_backend.crm.Infrastructure.Persistence.EFC.Configuration.Extens
 using customhost_backend.IAM.Domain.Model.Aggregates;
 using customhost_backend.IAM.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.Shared.Infrastructure.Interfaces.Persistence.EFC.Configuration.Extensions;
+using customhost.platform.API.billings.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,7 +46,10 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.ApplyGuestExperienceConfiguration();
         
         builder.ApplyIamConfiguration();
+        builder.ApplyBillingsConfiguration();
 
         builder.UseSnakeCaseNamingConvention();
+        
+        
     }
 }
