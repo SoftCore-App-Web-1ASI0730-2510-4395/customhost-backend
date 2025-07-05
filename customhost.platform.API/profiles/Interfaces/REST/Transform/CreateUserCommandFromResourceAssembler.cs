@@ -12,7 +12,7 @@ public static class CreateProfileCommandFromResourceAssembler
             role = EProfileRole.Guest;
 
         return new CreateProfileCommand(
-            resource.HotelId ?? 0,
+            resource.HotelId,
             resource.FirstName ?? "",
             resource.LastName ?? "",
             resource.Email ?? "",

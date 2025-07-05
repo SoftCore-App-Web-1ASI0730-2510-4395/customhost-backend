@@ -2,7 +2,7 @@ namespace customhost_backend.profiles.Interfaces.REST.Resources;
 
 public record ProfileResource(
     int Id,
-    int HotelId,
+    int? HotelId,
     string FirstName,
     string LastName,
     string Email,
