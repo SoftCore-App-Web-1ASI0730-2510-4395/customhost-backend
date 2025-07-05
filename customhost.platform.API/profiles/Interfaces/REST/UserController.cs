@@ -1,9 +1,12 @@
 using System.Net.Mime;
+using customhost_backend.IAM.Domain.Model.Queries;
+using customhost_backend.IAM.Interfaces.REST.Transform;
 using customhost_backend.profiles.Domain.Models.Commands;
 using customhost_backend.profiles.Domain.Models.ValueObjects;
 using customhost_backend.profiles.Domain.Services;
 using customhost_backend.profiles.Interfaces.REST.Resources;
 using customhost_backend.profiles.Interfaces.REST.Transform;
+using customhost.platform.API.profiles.Domain.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -24,16 +27,15 @@ public class ProfilesController(
         Description = "Creates a new Profile with the specified details.",
         OperationId = "CreateProfile")]
     [SwaggerResponse(201, "Profile created successfully", typeof(ProfileResource))]
-    [SwaggerResponse(400, "Profile can't be created.", null)]
-    public async Task<ActionResult> CreateProfile([FromBody] CreateProfileResource ProfileResource)
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid profile data", null)]
+    public async Task<ActionResult> CreateProfile(CreateProfileResource ProfileResource)
     {
         var command = CreateProfileCommandFromResourceAssembler.ToCommandFromResource(ProfileResource);
         var result = await ProfileCommandService.Handle(command);
-        if (result == null)
-            return BadRequest("Profile could not be created. Email might already exist.");
-
-        return CreatedAtAction(nameof(GetProfileById), new { id = result.Id }, 
-            ProfileResourceFromEntityAssembler.ToResourceFromEntity(result));
+        if (result == null) return BadRequest("Profile could not be created. Please check the provided data.");
+        var resource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(result);
+        
+        return StatusCode(201, resource);
     }
 
     [HttpGet]
@@ -44,8 +46,8 @@ public class ProfilesController(
     [SwaggerResponse(200, "Profiles retrieved successfully", typeof(IEnumerable<ProfileResource>))]
     public async Task<ActionResult> GetProfiles()
     {
-        var Profiles = (await ProfileQueryService.GetAllAsync()).ToList();
-        var resources = ProfileResourceFromEntityAssembler.ToResourcesFromEntities(Profiles);
+        var Profiles = await ProfileQueryService.Handle(new GetAllProfilesQuery());
+        var resources = Profiles.Select(ProfileResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
     }
 

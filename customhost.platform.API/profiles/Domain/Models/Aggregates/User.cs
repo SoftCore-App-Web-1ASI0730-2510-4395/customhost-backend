@@ -13,7 +13,7 @@ namespace customhost_backend.profiles.Domain.Models.Aggregates;
 public class Profile
 {
     public int Id { get; private set; }
-    public int HotelId { get; private set; }
+    public int? HotelId { get; private set; }
     public string FirstName { get; private set; } = string.Empty;
     public string LastName { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;

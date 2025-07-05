@@ -82,14 +82,6 @@ public class HotelController(
         return Ok("Hotel deleted successfully");
     }
 
-    [HttpGet("admin/{adminId:int}")]
-    [SwaggerOperation("Get Hotels by Admin", "Get hotels managed by a specific admin.", OperationId = "GetHotelsByAdmin")]
-    [SwaggerResponse(200, "The hotels were found and returned.", typeof(IEnumerable<HotelResource>))]
-    public async Task<IActionResult> GetHotelsByAdmin(int adminId)
-    {
-        var getHotelsByAdminQuery = new GetHotelsByAdminIdQuery(adminId);
-        var hotels = await hotelQueryService.Handle(getHotelsByAdminQuery);
-        var hotelResources = hotels.Select(HotelResourceFromEntityAssembler.ToResourceFromEntity);
-        return Ok(hotelResources);
-    }
+    
+    
 }

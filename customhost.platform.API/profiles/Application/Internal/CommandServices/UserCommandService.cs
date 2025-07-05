@@ -1,3 +1,4 @@
+using customhost_backend.crm.Domain.Repositories;
 using customhost_backend.profiles.Domain.Models.Aggregates;
 using customhost_backend.profiles.Domain.Models.Commands;
 using customhost_backend.profiles.Domain.Repositories;
@@ -9,14 +10,21 @@ namespace customhost_backend.profiles.Application.Internal.CommandServices;
 /// <summary>
 /// Profile Command Service Implementation
 /// </summary>
-public class ProfileCommandService(IProfileRepository ProfileRepository, IUnitOfWork unitOfWork) 
+public class ProfileCommandService(IProfileRepository ProfileRepository, IUnitOfWork unitOfWork, IHotelRepository hotelRepository) 
     : IProfileCommandService
 {
     /// <inheritdoc />
     public async Task<Profile?> Handle(CreateProfileCommand command)
     {
-        try
-        {
+        
+            // Check ig hotelId exists
+            if (command.HotelId.HasValue)
+            {
+                var hotel = await hotelRepository.FindByIdAsync(command.HotelId.Value);
+                if (hotel == null)
+                    throw new Exception($"Hotel with ID {command.HotelId.Value} not found.");
+            }
+
             // Check if email already exists
             var existingProfile = await ProfileRepository.FindByEmailAsync(command.Email);
             if (existingProfile != null) return null;
@@ -25,18 +33,14 @@ public class ProfileCommandService(IProfileRepository ProfileRepository, IUnitOf
             await ProfileRepository.AddAsync(Profile);
             await unitOfWork.CompleteAsync();
             return Profile;
-        }
-        catch
-        {
-            return null;
-        }
+        
+     
     }
 
     /// <inheritdoc />
     public async Task<Profile?> Handle(UpdateProfileCommand command)
     {
-        try
-        {
+        
             var Profile = await ProfileRepository.FindByIdAsync(command.Id);
             if (Profile == null) return null;
 
@@ -51,28 +55,19 @@ public class ProfileCommandService(IProfileRepository ProfileRepository, IUnitOf
             ProfileRepository.Update(Profile);
             await unitOfWork.CompleteAsync();
             return Profile;
-        }
-        catch
-        {
-            return null;
-        }
+        
     }
 
     /// <inheritdoc />
     public async Task<bool> Handle(DeleteProfileCommand command)
     {
-        try
-        {
+        
             var Profile = await ProfileRepository.FindByIdAsync(command.Id);
             if (Profile == null) return false;
 
             ProfileRepository.Remove(Profile);
             await unitOfWork.CompleteAsync();
             return true;
-        }
-        catch
-        {
-            return false;
-        }
+        
     }
 }

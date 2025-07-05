@@ -2,6 +2,7 @@ using customhost_backend.profiles.Domain.Models.Aggregates;
 using customhost_backend.profiles.Domain.Models.ValueObjects;
 using customhost_backend.profiles.Domain.Repositories;
 using customhost_backend.profiles.Domain.Services;
+using customhost.platform.API.profiles.Domain.Queries;
 
 namespace customhost_backend.profiles.Application.Internal.QueryServices;
 
@@ -13,6 +14,11 @@ public class ProfileQueryService(IProfileRepository ProfileRepository)
 {
     /// <inheritdoc />
     public async Task<IEnumerable<Profile>> GetAllAsync()
+    {
+        return await ProfileRepository.ListAsync();
+    }
+
+    public async Task<IEnumerable<Profile>> Handle(GetAllProfilesQuery query)
     {
         return await ProfileRepository.ListAsync();
     }

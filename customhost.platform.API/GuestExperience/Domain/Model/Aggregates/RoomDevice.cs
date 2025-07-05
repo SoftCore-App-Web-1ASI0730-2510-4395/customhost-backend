@@ -39,6 +39,15 @@ public class RoomDevice
     public RoomDevice(CreateRoomDeviceCommand command) : this(command.RoomId, command.IoTDeviceId, command.Status)
     {
     }
+    
+    public void ChangeStatus(string newStatus)
+    {
+        if (string.IsNullOrWhiteSpace(newStatus))
+            throw new ArgumentException("New status cannot be null or empty", nameof(newStatus));
+
+        Status = newStatus;
+    }
+    
 
     public void UpdateStatus(string status)
     {

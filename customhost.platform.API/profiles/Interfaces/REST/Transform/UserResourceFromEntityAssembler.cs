@@ -5,9 +5,9 @@ namespace customhost_backend.profiles.Interfaces.REST.Transform;
 
 public static class ProfileResourceFromEntityAssembler
 {
-    public static ProfileResource ToResourceFromEntity(Profile Profile)
-    {
-        return new ProfileResource(
+    public static ProfileResource ToResourceFromEntity(Profile Profile) =>
+         
+        new ProfileResource(
             Profile.Id,
             Profile.HotelId,
             Profile.FirstName,
@@ -17,10 +17,7 @@ public static class ProfileResourceFromEntityAssembler
             Profile.Role.ToString(),
             Profile.CreatedAt
         );
-    }
-
-    public static List<ProfileResource> ToResourcesFromEntities(IEnumerable<Profile> Profiles)
-    {
-        return Profiles.Select(Profile => ToResourceFromEntity(Profile)).ToList();
-    }
+    
+    public static IEnumerable<ProfileResource> ToResourcesFromEntities(IEnumerable<Profile> profiles) =>
+        profiles.Select(ToResourceFromEntity);
 }

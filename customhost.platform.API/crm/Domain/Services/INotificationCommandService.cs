@@ -21,4 +21,5 @@ public interface INotificationCommandService
     /// <param name="command">Mark notification as read command</param>
     /// <returns>Updated notification or null if failed</returns>
     Task<Notification?> Handle(MarkNotificationAsReadCommand command);
+    
 }

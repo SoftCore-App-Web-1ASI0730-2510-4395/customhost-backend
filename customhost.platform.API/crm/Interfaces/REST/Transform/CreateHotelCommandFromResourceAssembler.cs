@@ -19,8 +19,7 @@ public static class CreateHotelCommandFromResourceAssembler
             resource.Name,
             resource.Address,
             resource.Email,
-            resource.Phone,
-            resource.AdminId
+            resource.Phone
         );
     }
 }

@@ -1,5 +1,7 @@
+using customhost_backend.IAM.Domain.Model.Queries;
 using customhost_backend.profiles.Domain.Models.Aggregates;
 using customhost_backend.profiles.Domain.Models.ValueObjects;
+using customhost.platform.API.profiles.Domain.Queries;
 
 namespace customhost_backend.profiles.Domain.Services;
 
@@ -12,7 +14,7 @@ public interface IProfileQueryService
     /// Get all Profiles
     /// </summary>
     /// <returns>All Profiles</returns>
-    Task<IEnumerable<Profile>> GetAllAsync();
+    Task<IEnumerable<Profile>> Handle(GetAllProfilesQuery query);
     
     /// <summary>
     /// Get Profile by ID

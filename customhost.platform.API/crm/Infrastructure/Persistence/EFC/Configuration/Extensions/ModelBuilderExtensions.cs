@@ -14,7 +14,7 @@ public static class ModelBuilderExtensions
         builder.Entity<Hotel>().Property(h => h.Phone).IsRequired().HasMaxLength(20);
         builder.Entity<Hotel>().Property(h => h.Status).IsRequired().HasConversion<string>();
         builder.Entity<Hotel>().Property(h => h.CreatedAt).IsRequired().HasColumnType("datetime");
-        builder.Entity<Hotel>().Property(h => h.AdminId).IsRequired();
+        
           // Specify table name explicitly
         builder.Entity<Hotel>().ToTable("hotels");
         
@@ -25,7 +25,8 @@ public static class ModelBuilderExtensions
         builder.Entity<Booking>().Property(b => b.HotelId).IsRequired();
         builder.Entity<Booking>().Property(b => b.RoomId).IsRequired();
         builder.Entity<Booking>().Property(b => b.CheckInDate).IsRequired().HasColumnType("datetime");
-        builder.Entity<Booking>().Property(b => b.CheckOutDate).IsRequired().HasColumnType("datetime");        builder.Entity<Booking>().Property(b => b.Status).IsRequired().HasConversion<string>();
+        builder.Entity<Booking>().Property(b => b.CheckOutDate).IsRequired().HasColumnType("datetime");        
+        builder.Entity<Booking>().Property(b => b.Status).IsRequired().HasConversion<string>();
         builder.Entity<Booking>().Property(b => b.TotalPrice).IsRequired().HasColumnType("decimal(18,2)");
         builder.Entity<Booking>().Property(b => b.PaymentStatus).IsRequired().HasConversion<string>();
         builder.Entity<Booking>().Property(b => b.SpecialRequests).HasMaxLength(1000).IsRequired(false);

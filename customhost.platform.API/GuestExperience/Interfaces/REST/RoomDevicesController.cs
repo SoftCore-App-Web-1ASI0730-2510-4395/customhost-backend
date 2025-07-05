@@ -77,6 +77,27 @@ public class RoomDevicesController(
         var roomDeviceResource = RoomDeviceResourceFromEntityAssembler.ToResourceFromEntity(roomDevice);
         return CreatedAtAction(nameof(GetRoomDeviceById), new { roomDeviceId = roomDevice.Id }, roomDeviceResource);
     }
+    
+    
+    
+    [HttpPatch("{roomDeviceId:int}")]
+    [SwaggerOperation(
+        Summary = "Change device status",
+        Description = "Change device status with device Id",
+        OperationId = "ChangeDeviceStatus")]
+    [SwaggerResponse(200, "Device status changed successfully", typeof(RoomDeviceResource))]
+    [SwaggerResponse(404, "Device not found", null)]
+    [SwaggerResponse(400, "Device status changed failed", null)]
+    public async Task<ActionResult> ChangeDeviceStatus([FromRoute] int roomDeviceId, [FromBody] ChangeDeviceStatusResource resource)
+    {
+        var command = new ChangeStatusRoomDeviceCommand(roomDeviceId, resource.Status);
+        var result = await roomDeviceCommandService.Handle(command);
+        if (result == null)
+            return NotFound($"Device with ID {roomDeviceId} not found.");
+
+        var deviceResource = RoomDeviceResourceFromEntityAssembler.ToResourceFromEntity(result);
+        return Ok(deviceResource);
+    }
 
     [HttpDelete("{roomDeviceId:int}")]
     [SwaggerOperation(
