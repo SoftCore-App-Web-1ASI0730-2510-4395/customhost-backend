@@ -19,8 +19,7 @@ public class Hotel
     public string Phone { get; private set; }
     public HotelStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
-    public int AdminId { get; private set; }
-    
+
     public string EmailAddress => Email;
     public bool IsActive => Status == HotelStatus.Active;
     
@@ -31,11 +30,11 @@ public class Hotel
         Address = string.Empty;
         Email = string.Empty;
         Phone = string.Empty;
-        Status = HotelStatus.Inactive;
+        Status = HotelStatus.Active;
         CreatedAt = DateTime.UtcNow;
     }
     
-    public Hotel(string name, string address, string email, string phone, int adminId)
+    public Hotel(string name, string address, string email, string phone)
     {
         ValidateEmail(email);
         Name = name;
@@ -44,7 +43,7 @@ public class Hotel
         Phone = phone;
         Status = HotelStatus.Active;
         CreatedAt = DateTime.UtcNow;
-        AdminId = adminId;
+        
     }
 
     public Hotel(CreateHotelCommand command)
@@ -56,7 +55,7 @@ public class Hotel
         Phone = command.Phone;
         Status = HotelStatus.Active;
         CreatedAt = DateTime.UtcNow;
-        AdminId = command.AdminId;
+        
     }
     
     public void UpdateInfo(string name, string address, string email, string phone)

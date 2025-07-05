@@ -22,10 +22,6 @@ public interface IHotelQueryService
     /// <returns>Hotel if found</returns>
     Task<Hotel?> Handle(GetHotelByIdQuery query);
     
-    /// <summary>
-    /// Handle get hotels by admin id query
-    /// </summary>
-    /// <param name="query">Get hotels by admin id query</param>
-    /// <returns>List of hotels managed by admin</returns>
-    Task<IEnumerable<Hotel>> Handle(GetHotelsByAdminIdQuery query);
+   
+    
 }

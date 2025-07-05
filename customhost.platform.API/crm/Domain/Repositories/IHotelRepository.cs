@@ -8,12 +8,6 @@ namespace customhost_backend.crm.Domain.Repositories;
 /// </summary>
 public interface IHotelRepository : IBaseRepository<Hotel>
 {
-    /// <summary>
-    /// Find hotels by admin ID
-    /// </summary>
-    /// <param name="adminId">The admin ID</param>
-    /// <returns>List of hotels managed by the admin</returns>
-    Task<IEnumerable<Hotel>> FindByAdminIdAsync(int adminId);
     
     /// <summary>
     /// Find hotel by email

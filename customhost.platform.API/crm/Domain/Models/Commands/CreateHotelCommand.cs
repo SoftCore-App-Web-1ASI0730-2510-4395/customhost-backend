@@ -18,7 +18,7 @@ namespace customhost_backend.crm.Domain.Models.Commands;
 /// <param name="AdminId">
 /// The admin ID responsible for the hotel.
 /// </param>
-public record CreateHotelCommand(string Name, string Address, string Email, string Phone, int AdminId)
+public record CreateHotelCommand(string Name, string Address, string Email, string Phone)
 {
     public void Validate()
     {
@@ -33,9 +33,6 @@ public record CreateHotelCommand(string Name, string Address, string Email, stri
         
         if (string.IsNullOrWhiteSpace(Phone))
             throw new ArgumentException("Hotel phone is required", nameof(Phone));
-        
-        if (AdminId <= 0)
-            throw new ArgumentException("Valid admin ID is required", nameof(AdminId));
         
         if (Name.Length > 200)
             throw new ArgumentException("Hotel name cannot exceed 200 characters", nameof(Name));
