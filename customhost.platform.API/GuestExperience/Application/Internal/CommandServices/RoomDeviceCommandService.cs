@@ -15,6 +15,18 @@ public class RoomDeviceCommandService(
     IUnitOfWork unitOfWork
 ) : IRoomDeviceCommandService
 {
+
+    public async Task<RoomDevice> Handle(ChangeStatusRoomDeviceCommand command)
+    {
+        var roomDevice = await roomDeviceRepository.FindByIdAsync(command.Id);
+        if (roomDevice == null) return null;
+
+        roomDevice.ChangeStatus(command.Status);
+        roomDeviceRepository.Update(roomDevice);
+        await unitOfWork.CompleteAsync();
+        return roomDevice;
+    }
+    
     public async Task<RoomDevice?> Handle(CreateRoomDeviceCommand command)
     {
         // Verify IoT Device exists
