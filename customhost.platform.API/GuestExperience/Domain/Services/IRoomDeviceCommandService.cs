@@ -10,5 +10,7 @@ public interface IRoomDeviceCommandService
 {
     Task<RoomDevice?> Handle(CreateRoomDeviceCommand command);
     Task<RoomDevice?> Handle(UpdateRoomDeviceCommand command);
+    
+    Task<RoomDevice?> Handle(ChangeStatusRoomDeviceCommand command);
     Task<bool> Handle(DeleteRoomDeviceCommand command);
 }
