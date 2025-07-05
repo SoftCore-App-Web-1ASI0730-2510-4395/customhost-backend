@@ -23,8 +23,5 @@ public class HotelQueryService(IHotelRepository hotelRepository) : IHotelQuerySe
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<Hotel>> Handle(GetHotelsByAdminIdQuery query)
-    {
-        return await hotelRepository.FindByAdminIdAsync(query.AdminId);
-    }
+    
 }

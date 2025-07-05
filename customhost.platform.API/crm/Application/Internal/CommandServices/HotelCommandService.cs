@@ -2,6 +2,7 @@ using customhost_backend.crm.Domain.Models.Aggregates;
 using customhost_backend.crm.Domain.Models.Commands;
 using customhost_backend.crm.Domain.Repositories;
 using customhost_backend.crm.Domain.Services;
+using customhost_backend.profiles.Domain.Repositories;
 using customhost_backend.Shared.Domain.Repositories;
 
 namespace customhost_backend.crm.Application.Internal.CommandServices;
@@ -11,6 +12,7 @@ namespace customhost_backend.crm.Application.Internal.CommandServices;
 /// </summary>
 public class HotelCommandService(
     IHotelRepository hotelRepository,
+    IProfileRepository profileRepository,
     IUnitOfWork unitOfWork) 
     : IHotelCommandService
 {
@@ -25,6 +27,8 @@ public class HotelCommandService(
         {
             throw new InvalidOperationException($"Hotel with email {command.Email} already exists");
         }
+        
+        
 
         var hotel = new Hotel(command);
         try
