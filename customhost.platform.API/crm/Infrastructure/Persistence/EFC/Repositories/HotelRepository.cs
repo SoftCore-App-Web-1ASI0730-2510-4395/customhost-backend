@@ -16,12 +16,7 @@ public class HotelRepository : BaseRepository<Hotel>, IHotelRepository
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<Hotel>> FindByAdminIdAsync(int adminId)
-    {
-        return await Context.Set<Hotel>()
-            .Where(h => h.AdminId == adminId)
-            .ToListAsync();
-    }    /// <inheritdoc />
+    
     public async Task<Hotel?> FindByEmailAsync(string email)
     {
         return await Context.Set<Hotel>()
