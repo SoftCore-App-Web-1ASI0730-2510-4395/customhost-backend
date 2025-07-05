@@ -7,6 +7,6 @@ public record CreateHotelResource(
     string Name,
     string Address,
     string Email,
-    string Phone,
-    int AdminId
+    string Phone
+    
 );

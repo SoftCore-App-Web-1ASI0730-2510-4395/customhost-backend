@@ -10,6 +10,5 @@ public record HotelResource(
     string Email,
     string Phone,
     string Status,
-    DateTime CreatedAt,
-    int AdminId
+    DateTime CreatedAt
 );

@@ -21,9 +21,8 @@ public static class HotelResourceFromEntityAssembler
             entity.Address,
             entity.EmailAddress,
             entity.Phone,
-            entity.Status.ToString().ToLowerInvariant(),
-            entity.CreatedAt,
-            entity.AdminId
+            entity.Status.ToString(),
+            entity.CreatedAt
         );
     }
 }
