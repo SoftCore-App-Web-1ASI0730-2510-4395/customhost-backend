@@ -18,7 +18,7 @@ namespace customhost_backend.crm.Interfaces.REST;
 public class RoomsController(
     IRoomCommandService roomCommandService,
     IRoomQueryService roomQueryService,
-    IRoomDeviceQueryService roomDeviceQueryService)
+    IDeviceQueryService DeviceQueryService)
     : ControllerBase
 {
     [HttpGet]
@@ -113,17 +113,17 @@ public class RoomsController(
         }
 
         // Get all room devices
-        var getAllRoomDevicesQuery = new GetAllRoomDevicesQuery();
-        var allRoomDevices = await roomDeviceQueryService.Handle(getAllRoomDevicesQuery);
+        var getAllDevicesQuery = new GetAllDevicesQuery();
+        var allDevices = await DeviceQueryService.Handle(getAllDevicesQuery);
 
         // Create rooms with devices resources
         var roomsWithDevices = rooms.Select(room =>
         {
             // Filter room devices for this specific room
-            var roomDevices = allRoomDevices.Where(rd => rd.RoomId == room.Id);
+            var Devices = allDevices.Where(rd => rd.RoomId == room.Id);
             
             // Convert to resources
-            var deviceResources = roomDevices.Select(RoomDeviceResourceFromEntityAssembler.ToResourceFromEntity);
+            var deviceResources = Devices.Select(DeviceResourceFromEntityAssembler.ToResourceFromEntity);
               return new RoomWithDevicesResource(
                 room.Id,
                 room.RoomNumber,

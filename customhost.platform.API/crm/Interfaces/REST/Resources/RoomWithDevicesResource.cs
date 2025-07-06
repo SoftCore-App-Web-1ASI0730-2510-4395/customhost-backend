@@ -13,5 +13,5 @@ public record RoomWithDevicesResource(
     int HotelId,
     decimal Price,
     int Floor,
-    IEnumerable<RoomDeviceResource> Devices
+    IEnumerable<DeviceResource> Devices
 );
