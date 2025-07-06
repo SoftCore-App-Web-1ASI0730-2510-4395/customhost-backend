@@ -146,19 +146,24 @@ builder.Services.AddScoped<ISubscriptionPlanCommandService, SubscriptionPlanComm
 
 // CRM Bounded Context
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
-builder.Services.AddScoped<IBookingRepository, BookingRepository>();
-builder.Services.AddScoped<IStaffMemberRepository, StaffMemberRepository>();
-builder.Services.AddScoped<IRoomRepository, RoomRepository>();
-builder.Services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IHotelCommandService, HotelCommandService>();
 builder.Services.AddScoped<IHotelQueryService, HotelQueryService>();
+
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IStaffMemberRepository, StaffMemberRepository>();
+
+builder.Services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+
 builder.Services.AddScoped<IBookingCommandService, BookingCommandService>();
 builder.Services.AddScoped<IBookingQueryService, BookingQueryService>();
 builder.Services.AddScoped<IStaffMemberCommandService, StaffMemberCommandService>();
 builder.Services.AddScoped<IStaffMemberQueryService, StaffMemberQueryService>();
+
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IRoomCommandService, RoomCommandService>();
 builder.Services.AddScoped<IRoomQueryService, RoomQueryService>();
+
 builder.Services.AddScoped<IServiceRequestCommandService, ServiceRequestCommandService>();
 builder.Services.AddScoped<IServiceRequestQueryService, ServiceRequestQueryService>();
 builder.Services.AddScoped<INotificationCommandService, NotificationCommandService>();

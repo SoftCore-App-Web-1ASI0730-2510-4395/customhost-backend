@@ -1,4 +1,5 @@
 using customhost_backend.crm.Domain.Models.Aggregates;
+using customhost_backend.crm.Domain.Models.Queries;
 
 namespace customhost_backend.crm.Domain.Services;
 
@@ -26,6 +27,8 @@ public interface IRoomQueryService
     /// <param name="hotelId">Hotel ID</param>
     /// <returns>Rooms in the hotel</returns>
     Task<IEnumerable<Room>> GetByHotelIdAsync(int hotelId);
+    
+    Task<IEnumerable<Room>> Handle(GetAllRoomsByHotelIdQuery query);
     
     /// <summary>
     /// Get room by room number
