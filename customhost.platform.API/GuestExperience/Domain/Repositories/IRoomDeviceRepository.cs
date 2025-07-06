@@ -6,9 +6,9 @@ namespace customhost_backend.GuestExperience.Domain.Repositories;
 /// <summary>
 /// Repository interface for Room Device aggregate
 /// </summary>
-public interface IRoomDeviceRepository : IBaseRepository<RoomDevice>
+public interface IDeviceRepository : IBaseRepository<Device>
 {
-    Task<IEnumerable<RoomDevice>> FindByRoomIdAsync(int roomId);
-    Task<IEnumerable<RoomDevice>> FindByIoTDeviceIdAsync(int iotDeviceId);
-    Task<bool> ExistsDeviceInRoomAsync(int roomId, int iotDeviceId);
+    Task<IEnumerable<Device>> FindByRoomIdAsync(int roomId);
+    Task<IEnumerable<Device>> FindByDeviceModelIdAsync(int DeviceModelId);
+    Task<bool> ExistsDeviceInRoomAsync(int roomId, int DeviceModelId);
 }

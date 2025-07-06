@@ -5,6 +5,6 @@ namespace customhost_backend.GuestExperience.Domain.Model.Queries;
 /// <summary>
 /// Query to get an IoT Device by Id
 /// </summary>
-public record GetIoTDeviceByIdQuery(
+public record GetDeviceModelByIdQuery(
     [Required] int Id
 );

@@ -6,8 +6,8 @@ namespace customhost_backend.GuestExperience.Domain.Repositories;
 /// <summary>
 /// Repository interface for IoT Device aggregate
 /// </summary>
-public interface IIoTDeviceRepository : IBaseRepository<IoTDevice>
+public interface IDeviceModelRepository : IBaseRepository<DeviceModel>
 {
     Task<bool> ExistsByNameAsync(string name);
-    Task<IEnumerable<IoTDevice>> FindByDeviceTypeAsync(string deviceType);
+    Task<IEnumerable<DeviceModel>> FindByDeviceTypeAsync(string deviceType);
 }

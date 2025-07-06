@@ -5,7 +5,7 @@ namespace customhost_backend.GuestExperience.Domain.Model.Commands;
 /// <summary>
 /// Command to create a Room Device Preference
 /// </summary>
-public record CreateRoomDevicePreferenceCommand(
-    [Required] int RoomDeviceId,
+public record CreateDevicePreferenceCommand(
+    [Required] int DeviceId,
     [Required] string Preferences
 );

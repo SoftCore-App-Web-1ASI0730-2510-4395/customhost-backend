@@ -6,9 +6,9 @@ namespace customhost_backend.GuestExperience.Domain.Services;
 /// <summary>
 /// Room Device Preference query service interface
 /// </summary>
-public interface IRoomDevicePreferenceQueryService
+public interface IDevicePreferenceQueryService
 {
-    Task<IEnumerable<RoomDevicePreference>> Handle(GetAllRoomDevicePreferencesQuery query);
-    Task<RoomDevicePreference?> Handle(GetRoomDevicePreferenceByIdQuery query);
-    Task<IEnumerable<RoomDevicePreference>> Handle(GetRoomDevicePreferencesByRoomDeviceIdQuery query);
+    Task<IEnumerable<DevicePreference>> Handle(GetAllDevicePreferencesQuery query);
+    Task<DevicePreference?> Handle(GetDevicePreferenceByIdQuery query);
+    Task<IEnumerable<DevicePreference>> Handle(GetDevicePreferencesByDeviceIdQuery query);
 }
