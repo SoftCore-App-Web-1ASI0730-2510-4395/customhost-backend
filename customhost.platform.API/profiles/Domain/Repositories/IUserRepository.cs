@@ -9,4 +9,6 @@ public interface IProfileRepository : IBaseRepository<Profile>
     Task<Profile?> FindByEmailAsync(string email);
     Task<IEnumerable<Profile>> FindByHotelIdAsync(int hotelId);
     Task<IEnumerable<Profile>> FindByRoleAsync(EProfileRole role);
+
+    Task<Profile?> FindByUserIdAsync(int userId);
 }

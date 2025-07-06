@@ -9,5 +9,6 @@ public record UpdateProfileCommand(
     string? LastName,
     string? Email,
     string? Phone,
-    EProfileRole? Role
+    EProfileRole? Role,
+    int? UserId
 );
