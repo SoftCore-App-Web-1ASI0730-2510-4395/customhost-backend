@@ -14,9 +14,9 @@ public static class ModelBuilderExtensions
     /// <param name="builder">ModelBuilder instance</param>
     public static void ApplyGuestExperienceConfiguration(this ModelBuilder builder)
     {
-        builder.ApplyConfiguration(new IoTDeviceConfiguration());
-        builder.ApplyConfiguration(new RoomDeviceConfiguration());
-        builder.ApplyConfiguration(new RoomDevicePreferenceConfiguration());
+        builder.ApplyConfiguration(new DeviceModelConfiguration());
+        builder.ApplyConfiguration(new DeviceConfiguration());
+        builder.ApplyConfiguration(new DevicePreferenceConfiguration());
         builder.ApplyConfiguration(new UserDevicePreferenceConfiguration());
     }
 }

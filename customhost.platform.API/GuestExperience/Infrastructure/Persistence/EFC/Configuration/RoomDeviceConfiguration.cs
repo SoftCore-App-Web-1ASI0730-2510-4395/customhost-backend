@@ -7,9 +7,9 @@ namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Conf
 /// <summary>
 /// Room Device entity configuration for Entity Framework Core
 /// </summary>
-public class RoomDeviceConfiguration : IEntityTypeConfiguration<RoomDevice>
+public class DeviceConfiguration : IEntityTypeConfiguration<Device>
 {
-    public void Configure(EntityTypeBuilder<RoomDevice> builder)
+    public void Configure(EntityTypeBuilder<Device> builder)
     {
         builder.ToTable("room_devices");
         
@@ -20,7 +20,7 @@ public class RoomDeviceConfiguration : IEntityTypeConfiguration<RoomDevice>
                .HasColumnName("room_id")
                .IsRequired();
                
-        builder.Property(e => e.IoTDeviceId)
+        builder.Property(e => e.DeviceModelId)
                .HasColumnName("iot_device_id")
                .IsRequired();
                
@@ -32,10 +32,10 @@ public class RoomDeviceConfiguration : IEntityTypeConfiguration<RoomDevice>
         builder.Property(e => e.CreatedAt)
                .HasColumnName("created_at");
         
-        // Relationship with IoTDevice
-        builder.HasOne(e => e.IoTDevice)
+        // Relationship with DeviceModel
+        builder.HasOne(e => e.DeviceModel)
                .WithMany()
-               .HasForeignKey(e => e.IoTDeviceId)
+               .HasForeignKey(e => e.DeviceModelId)
                .OnDelete(DeleteBehavior.Restrict);
     }
 }
