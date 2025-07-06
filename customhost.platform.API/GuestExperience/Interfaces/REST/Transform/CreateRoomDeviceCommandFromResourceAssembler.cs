@@ -4,20 +4,20 @@ using customhost_backend.GuestExperience.Interfaces.REST.Resources;
 namespace customhost_backend.GuestExperience.Interfaces.REST.Transform;
 
 /// <summary>
-/// Assembler class to convert CreateRoomDeviceResource to CreateRoomDeviceCommand
+/// Assembler class to convert CreateDeviceResource to CreateDeviceCommand
 /// </summary>
-public static class CreateRoomDeviceCommandFromResourceAssembler
+public static class CreateDeviceCommandFromResourceAssembler
 {
     /// <summary>
-    /// Convert CreateRoomDeviceResource to CreateRoomDeviceCommand
+    /// Convert CreateDeviceResource to CreateDeviceCommand
     /// </summary>
-    /// <param name="resource"><see cref="CreateRoomDeviceResource"/> resource to convert</param>
-    /// <returns><see cref="CreateRoomDeviceCommand"/> converted from <see cref="CreateRoomDeviceResource"/> resource</returns>
-    public static CreateRoomDeviceCommand ToCommandFromResource(CreateRoomDeviceResource resource)
+    /// <param name="resource"><see cref="CreateDeviceResource"/> resource to convert</param>
+    /// <returns><see cref="CreateDeviceCommand"/> converted from <see cref="CreateDeviceResource"/> resource</returns>
+    public static CreateDeviceCommand ToCommandFromResource(CreateDeviceResource resource)
     {
-        return new CreateRoomDeviceCommand(
+        return new CreateDeviceCommand(
             resource.RoomId,
-            resource.IoTDeviceId,
+            resource.DeviceModelId,
             resource.Status
         );
     }

@@ -13,85 +13,85 @@ namespace customhost_backend.GuestExperience.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available IoT Device Endpoints")]
-public class IoTDevicesController(
-    IIoTDeviceCommandService iotDeviceCommandService,
-    IIoTDeviceQueryService iotDeviceQueryService
+public class DeviceModelsController(
+    IDeviceModelCommandService DeviceModelCommandService,
+    IDeviceModelQueryService DeviceModelQueryService
 ) : ControllerBase
 {
     [HttpGet]
     [SwaggerOperation(
         Summary = "Gets all IoT devices",
         Description = "Get all available IoT devices.",
-        OperationId = "GetAllIoTDevices")]
-    [SwaggerResponse(StatusCodes.Status200OK, "IoT devices found", typeof(IEnumerable<IoTDeviceResource>))]
-    public async Task<IActionResult> GetAllIoTDevices()
+        OperationId = "GetAllDeviceModels")]
+    [SwaggerResponse(StatusCodes.Status200OK, "IoT devices found", typeof(IEnumerable<DeviceModelResource>))]
+    public async Task<IActionResult> GetAllDeviceModels()
     {
-        var getAllIoTDevicesQuery = new GetAllIoTDevicesQuery();
-        var iotDevices = await iotDeviceQueryService.Handle(getAllIoTDevicesQuery);
-        var iotDeviceResources = iotDevices.Select(IoTDeviceResourceFromEntityAssembler.ToResourceFromEntity);
-        return Ok(iotDeviceResources);
+        var getAllDeviceModelsQuery = new GetAllDeviceModelsQuery();
+        var DeviceModels = await DeviceModelQueryService.Handle(getAllDeviceModelsQuery);
+        var DeviceModelResources = DeviceModels.Select(DeviceModelResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(DeviceModelResources);
     }
 
-    [HttpGet("{iotDeviceId:int}")]
+    [HttpGet("{DeviceModelId:int}")]
     [SwaggerOperation(
         Summary = "Gets an IoT device by its ID",
         Description = "Get an IoT device by given device ID.",
-        OperationId = "GetIoTDeviceById")]
-    [SwaggerResponse(StatusCodes.Status200OK, "IoT device found", typeof(IoTDeviceResource))]
+        OperationId = "GetDeviceModelById")]
+    [SwaggerResponse(StatusCodes.Status200OK, "IoT device found", typeof(DeviceModelResource))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "IoT device not found")]
-    public async Task<IActionResult> GetIoTDeviceById([FromRoute] int iotDeviceId)
+    public async Task<IActionResult> GetDeviceModelById([FromRoute] int DeviceModelId)
     {
-        var getIoTDeviceByIdQuery = new GetIoTDeviceByIdQuery(iotDeviceId);
-        var iotDevice = await iotDeviceQueryService.Handle(getIoTDeviceByIdQuery);
-        if (iotDevice is null) return NotFound();
-        var iotDeviceResource = IoTDeviceResourceFromEntityAssembler.ToResourceFromEntity(iotDevice);
-        return Ok(iotDeviceResource);
+        var getDeviceModelByIdQuery = new GetDeviceModelByIdQuery(DeviceModelId);
+        var DeviceModel = await DeviceModelQueryService.Handle(getDeviceModelByIdQuery);
+        if (DeviceModel is null) return NotFound();
+        var DeviceModelResource = DeviceModelResourceFromEntityAssembler.ToResourceFromEntity(DeviceModel);
+        return Ok(DeviceModelResource);
     }
 
     [HttpPost]
     [SwaggerOperation(
         Summary = "Creates a new IoT device",
         Description = "Creates a new IoT device with the provided details.",
-        OperationId = "CreateIoTDevice")]
-    [SwaggerResponse(StatusCodes.Status201Created, "IoT device created successfully", typeof(IoTDeviceResource))]
+        OperationId = "CreateDeviceModel")]
+    [SwaggerResponse(StatusCodes.Status201Created, "IoT device created successfully", typeof(DeviceModelResource))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid IoT device data")]
-    public async Task<IActionResult> CreateIoTDevice([FromBody] CreateIoTDeviceResource resource)
+    public async Task<IActionResult> CreateDeviceModel([FromBody] CreateDeviceModelResource resource)
     {
-        var createIoTDeviceCommand = CreateIoTDeviceCommandFromResourceAssembler.ToCommandFromResource(resource);
-        var iotDevice = await iotDeviceCommandService.Handle(createIoTDeviceCommand);
-        if (iotDevice is null) return BadRequest("IoT device could not be created.");
-        var iotDeviceResource = IoTDeviceResourceFromEntityAssembler.ToResourceFromEntity(iotDevice);
-        return CreatedAtAction(nameof(GetIoTDeviceById), new { iotDeviceId = iotDevice.Id }, iotDeviceResource);
+        var createDeviceModelCommand = CreateDeviceModelCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var DeviceModel = await DeviceModelCommandService.Handle(createDeviceModelCommand);
+        if (DeviceModel is null) return BadRequest("IoT device could not be created.");
+        var DeviceModelResource = DeviceModelResourceFromEntityAssembler.ToResourceFromEntity(DeviceModel);
+        return CreatedAtAction(nameof(GetDeviceModelById), new { DeviceModelId = DeviceModel.Id }, DeviceModelResource);
     }
 
-    [HttpPut("{iotDeviceId:int}")]
+    [HttpPut("{DeviceModelId:int}")]
     [SwaggerOperation(
         Summary = "Updates an existing IoT device",
         Description = "Updates an existing IoT device with the provided details.",
-        OperationId = "UpdateIoTDevice")]
-    [SwaggerResponse(StatusCodes.Status200OK, "IoT device updated successfully", typeof(IoTDeviceResource))]
+        OperationId = "UpdateDeviceModel")]
+    [SwaggerResponse(StatusCodes.Status200OK, "IoT device updated successfully", typeof(DeviceModelResource))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "IoT device not found")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid IoT device data")]
-    public async Task<IActionResult> UpdateIoTDevice([FromRoute] int iotDeviceId, [FromBody] UpdateIoTDeviceResource resource)
+    public async Task<IActionResult> UpdateDeviceModel([FromRoute] int DeviceModelId, [FromBody] UpdateDeviceModelResource resource)
     {
-        var updateIoTDeviceCommand = UpdateIoTDeviceCommandFromResourceAssembler.ToCommandFromResource(iotDeviceId, resource);
-        var iotDevice = await iotDeviceCommandService.Handle(updateIoTDeviceCommand);
-        if (iotDevice is null) return NotFound();
-        var iotDeviceResource = IoTDeviceResourceFromEntityAssembler.ToResourceFromEntity(iotDevice);
-        return Ok(iotDeviceResource);
+        var updateDeviceModelCommand = UpdateDeviceModelCommandFromResourceAssembler.ToCommandFromResource(DeviceModelId, resource);
+        var DeviceModel = await DeviceModelCommandService.Handle(updateDeviceModelCommand);
+        if (DeviceModel is null) return NotFound();
+        var DeviceModelResource = DeviceModelResourceFromEntityAssembler.ToResourceFromEntity(DeviceModel);
+        return Ok(DeviceModelResource);
     }
 
-    [HttpDelete("{iotDeviceId:int}")]
+    [HttpDelete("{DeviceModelId:int}")]
     [SwaggerOperation(
         Summary = "Deletes an IoT device",
         Description = "Deletes an existing IoT device by its ID.",
-        OperationId = "DeleteIoTDevice")]
+        OperationId = "DeleteDeviceModel")]
     [SwaggerResponse(StatusCodes.Status204NoContent, "IoT device deleted successfully")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "IoT device not found")]
-    public async Task<IActionResult> DeleteIoTDevice([FromRoute] int iotDeviceId)
+    public async Task<IActionResult> DeleteDeviceModel([FromRoute] int DeviceModelId)
     {
-        var deleteIoTDeviceCommand = new DeleteIoTDeviceCommand(iotDeviceId);
-        var result = await iotDeviceCommandService.Handle(deleteIoTDeviceCommand);
+        var deleteDeviceModelCommand = new DeleteDeviceModelCommand(DeviceModelId);
+        var result = await DeviceModelCommandService.Handle(deleteDeviceModelCommand);
         if (!result) return NotFound();
         return NoContent();
     }

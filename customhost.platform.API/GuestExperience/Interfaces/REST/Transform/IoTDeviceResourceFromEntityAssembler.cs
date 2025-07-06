@@ -4,18 +4,18 @@ using customhost_backend.GuestExperience.Interfaces.REST.Resources;
 namespace customhost_backend.GuestExperience.Interfaces.REST.Transform;
 
 /// <summary>
-/// Assembler class to convert IoTDevice entity to IoTDeviceResource
+/// Assembler class to convert DeviceModel entity to DeviceModelResource
 /// </summary>
-public static class IoTDeviceResourceFromEntityAssembler
+public static class DeviceModelResourceFromEntityAssembler
 {
     /// <summary>
-    /// Convert IoTDevice entity to IoTDeviceResource
+    /// Convert DeviceModel entity to DeviceModelResource
     /// </summary>
-    /// <param name="entity"><see cref="IoTDevice"/> entity to convert</param>
-    /// <returns><see cref="IoTDeviceResource"/> converted from <see cref="IoTDevice"/> entity</returns>
-    public static IoTDeviceResource ToResourceFromEntity(IoTDevice entity)
+    /// <param name="entity"><see cref="DeviceModel"/> entity to convert</param>
+    /// <returns><see cref="DeviceModelResource"/> converted from <see cref="DeviceModel"/> entity</returns>
+    public static DeviceModelResource ToResourceFromEntity(DeviceModel entity)
     {
-        return new IoTDeviceResource(
+        return new DeviceModelResource(
             entity.Id,
             entity.Name,
             entity.DeviceType,

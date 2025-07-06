@@ -3,8 +3,8 @@ namespace customhost_backend.GuestExperience.Interfaces.REST.Resources;
 /// <summary>
 /// Update Room Device resource for API requests
 /// </summary>
-public record UpdateRoomDeviceResource(
+public record UpdateDeviceResource(
     int RoomId,
-    int IoTDeviceId,
+    int DeviceModelId,
     string Status
 );

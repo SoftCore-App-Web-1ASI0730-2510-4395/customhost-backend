@@ -4,28 +4,28 @@ using customhost_backend.GuestExperience.Interfaces.REST.Resources;
 namespace customhost_backend.GuestExperience.Interfaces.REST.Transform;
 
 /// <summary>
-/// Assembler class to convert RoomDevice entity to RoomDeviceResource
+/// Assembler class to convert Device entity to DeviceResource
 /// </summary>
-public static class RoomDeviceResourceFromEntityAssembler
+public static class DeviceResourceFromEntityAssembler
 {
     /// <summary>
-    /// Convert RoomDevice entity to RoomDeviceResource
+    /// Convert Device entity to DeviceResource
     /// </summary>
-    /// <param name="entity"><see cref="RoomDevice"/> entity to convert</param>
-    /// <returns><see cref="RoomDeviceResource"/> converted from <see cref="RoomDevice"/> entity</returns>
-    public static RoomDeviceResource ToResourceFromEntity(RoomDevice entity)
+    /// <param name="entity"><see cref="Device"/> entity to convert</param>
+    /// <returns><see cref="DeviceResource"/> converted from <see cref="Device"/> entity</returns>
+    public static DeviceResource ToResourceFromEntity(Device entity)
     {
-        var iotDeviceResource = entity.IoTDevice != null 
-            ? IoTDeviceResourceFromEntityAssembler.ToResourceFromEntity(entity.IoTDevice)
-            : new IoTDeviceResource(0, "", "", "", "", DateTime.MinValue);
+        var DeviceModelResource = entity.DeviceModel != null 
+            ? DeviceModelResourceFromEntityAssembler.ToResourceFromEntity(entity.DeviceModel)
+            : new DeviceModelResource(0, "", "", "", "", DateTime.MinValue);
 
-        return new RoomDeviceResource(
+        return new DeviceResource(
             entity.Id,
             entity.RoomId,
-            entity.IoTDeviceId,
+            entity.DeviceModelId,
             entity.Status,
             entity.CreatedAt,
-            iotDeviceResource
+            DeviceModelResource
         );
     }
 }

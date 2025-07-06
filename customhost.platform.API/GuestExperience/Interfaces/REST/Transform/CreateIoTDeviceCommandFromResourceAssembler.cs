@@ -4,18 +4,18 @@ using customhost_backend.GuestExperience.Interfaces.REST.Resources;
 namespace customhost_backend.GuestExperience.Interfaces.REST.Transform;
 
 /// <summary>
-/// Assembler class to convert CreateIoTDeviceResource to CreateIoTDeviceCommand
+/// Assembler class to convert CreateDeviceModelResource to CreateDeviceModelCommand
 /// </summary>
-public static class CreateIoTDeviceCommandFromResourceAssembler
+public static class CreateDeviceModelCommandFromResourceAssembler
 {
     /// <summary>
-    /// Convert CreateIoTDeviceResource to CreateIoTDeviceCommand
+    /// Convert CreateDeviceModelResource to CreateDeviceModelCommand
     /// </summary>
-    /// <param name="resource"><see cref="CreateIoTDeviceResource"/> resource to convert</param>
-    /// <returns><see cref="CreateIoTDeviceCommand"/> converted from <see cref="CreateIoTDeviceResource"/> resource</returns>
-    public static CreateIoTDeviceCommand ToCommandFromResource(CreateIoTDeviceResource resource)
+    /// <param name="resource"><see cref="CreateDeviceModelResource"/> resource to convert</param>
+    /// <returns><see cref="CreateDeviceModelCommand"/> converted from <see cref="CreateDeviceModelResource"/> resource</returns>
+    public static CreateDeviceModelCommand ToCommandFromResource(CreateDeviceModelResource resource)
     {
-        return new CreateIoTDeviceCommand(
+        return new CreateDeviceModelCommand(
             resource.Name,
             resource.DeviceType,
             resource.ConfigSchema
