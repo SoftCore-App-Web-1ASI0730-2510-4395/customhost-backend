@@ -8,6 +8,6 @@ namespace customhost_backend.analytics.Domain.Services;
 /// </summary>
 public interface IAnalyticsSnapshotQueryService
 {
-    Task<IoTDevicesOnlineStatusResource> Handle(GetIoTDevicesOnlineStatusQuery query);
+    Task<DeviceModelsOnlineStatusResource> Handle(GetDeviceModelsOnlineStatusQuery query);
     Task<RoomsOccupancyStatusResource> Handle(GetRoomsOccupancyStatusQuery query);
 }
