@@ -1,4 +1,5 @@
 using customhost_backend.crm.Domain.Repositories;
+using customhost_backend.IAM.Domain.Repositories;
 using customhost_backend.profiles.Domain.Models.Aggregates;
 using customhost_backend.profiles.Domain.Models.Commands;
 using customhost_backend.profiles.Domain.Repositories;
@@ -10,7 +11,7 @@ namespace customhost_backend.profiles.Application.Internal.CommandServices;
 /// <summary>
 /// Profile Command Service Implementation
 /// </summary>
-public class ProfileCommandService(IProfileRepository ProfileRepository, IUnitOfWork unitOfWork, IHotelRepository hotelRepository) 
+public class ProfileCommandService(IProfileRepository ProfileRepository, IUnitOfWork unitOfWork, IHotelRepository hotelRepository, IUserRepository userRepository) 
     : IProfileCommandService
 {
     /// <inheritdoc />
@@ -23,6 +24,13 @@ public class ProfileCommandService(IProfileRepository ProfileRepository, IUnitOf
                 var hotel = await hotelRepository.FindByIdAsync(command.HotelId.Value);
                 if (hotel == null)
                     throw new Exception($"Hotel with ID {command.HotelId.Value} not found.");
+            }
+
+            if (command.UserId.HasValue)
+            {
+                var user = await userRepository.FindByIdAsync(command.UserId.Value);
+                if (user == null)
+                    throw new Exception($"User with ID {command.UserId.Value} not found.");
             }
 
             // Check if email already exists
