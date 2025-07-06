@@ -262,11 +262,6 @@ if (app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
-app.UseRequestAuthorization();
-
-
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
