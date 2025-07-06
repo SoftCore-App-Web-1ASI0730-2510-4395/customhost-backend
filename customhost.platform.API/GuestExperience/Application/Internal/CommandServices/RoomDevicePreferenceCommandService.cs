@@ -9,43 +9,43 @@ namespace customhost_backend.GuestExperience.Application.Internal.CommandService
 /// <summary>
 /// Room Device Preference command service implementation
 /// </summary>
-public class RoomDevicePreferenceCommandService(
-    IRoomDevicePreferenceRepository roomDevicePreferenceRepository,
-    IRoomDeviceRepository roomDeviceRepository,
+public class DevicePreferenceCommandService(
+    IDevicePreferenceRepository DevicePreferenceRepository,
+    IDeviceRepository DeviceRepository,
     IUnitOfWork unitOfWork
-) : IRoomDevicePreferenceCommandService
+) : IDevicePreferenceCommandService
 {
-    public async Task<RoomDevicePreference?> Handle(CreateRoomDevicePreferenceCommand command)
+    public async Task<DevicePreference?> Handle(CreateDevicePreferenceCommand command)
     {
         // Verify Room Device exists
-        var roomDevice = await roomDeviceRepository.FindByIdAsync(command.RoomDeviceId);
-        if (roomDevice is null)
-            throw new Exception($"Room Device with id {command.RoomDeviceId} not found");
+        var Device = await DeviceRepository.FindByIdAsync(command.DeviceId);
+        if (Device is null)
+            throw new Exception($"Room Device with id {command.DeviceId} not found");
 
         // Check if preference already exists for this room device
-        var existingPreference = await roomDevicePreferenceRepository.FindByRoomDeviceIdSingleAsync(command.RoomDeviceId);
+        var existingPreference = await DevicePreferenceRepository.FindByDeviceIdSingleAsync(command.DeviceId);
         if (existingPreference is not null)
-            throw new Exception($"Preference for Room Device {command.RoomDeviceId} already exists");
+            throw new Exception($"Preference for Room Device {command.DeviceId} already exists");
 
-        var roomDevicePreference = new RoomDevicePreference(command);
-        await roomDevicePreferenceRepository.AddAsync(roomDevicePreference);
+        var DevicePreference = new DevicePreference(command);
+        await DevicePreferenceRepository.AddAsync(DevicePreference);
         await unitOfWork.CompleteAsync();
-        return roomDevicePreference;
+        return DevicePreference;
     }
 
-    public async Task<RoomDevicePreference?> Handle(UpdateRoomDevicePreferenceCommand command)
+    public async Task<DevicePreference?> Handle(UpdateDevicePreferenceCommand command)
     {
-        var roomDevicePreference = await roomDevicePreferenceRepository.FindByIdAsync(command.Id);
-        if (roomDevicePreference is null)
+        var DevicePreference = await DevicePreferenceRepository.FindByIdAsync(command.Id);
+        if (DevicePreference is null)
             throw new Exception($"Room Device Preference with id {command.Id} not found");
 
         // Verify Room Device exists
-        var roomDevice = await roomDeviceRepository.FindByIdAsync(command.RoomDeviceId);
-        if (roomDevice is null)
-            throw new Exception($"Room Device with id {command.RoomDeviceId} not found");
+        var Device = await DeviceRepository.FindByIdAsync(command.DeviceId);
+        if (Device is null)
+            throw new Exception($"Room Device with id {command.DeviceId} not found");
 
-        roomDevicePreference.UpdatePreferences(command.Preferences);
+        DevicePreference.UpdatePreferences(command.Preferences);
         await unitOfWork.CompleteAsync();
-        return roomDevicePreference;
+        return DevicePreference;
     }
 }

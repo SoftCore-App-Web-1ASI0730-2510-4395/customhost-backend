@@ -8,15 +8,15 @@ namespace customhost_backend.GuestExperience.Application.Internal.QueryServices;
 /// <summary>
 /// IoT Device query service implementation
 /// </summary>
-public class IoTDeviceQueryService(IIoTDeviceRepository iotDeviceRepository) : IIoTDeviceQueryService
+public class DeviceModelQueryService(IDeviceModelRepository DeviceModelRepository) : IDeviceModelQueryService
 {
-    public async Task<IEnumerable<IoTDevice>> Handle(GetAllIoTDevicesQuery query)
+    public async Task<IEnumerable<DeviceModel>> Handle(GetAllDeviceModelsQuery query)
     {
-        return await iotDeviceRepository.ListAsync();
+        return await DeviceModelRepository.ListAsync();
     }
 
-    public async Task<IoTDevice?> Handle(GetIoTDeviceByIdQuery query)
+    public async Task<DeviceModel?> Handle(GetDeviceModelByIdQuery query)
     {
-        return await iotDeviceRepository.FindByIdAsync(query.Id);
+        return await DeviceModelRepository.FindByIdAsync(query.Id);
     }
 }

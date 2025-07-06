@@ -8,20 +8,20 @@ namespace customhost_backend.GuestExperience.Application.Internal.QueryServices;
 /// <summary>
 /// Room Device query service implementation
 /// </summary>
-public class RoomDeviceQueryService(IRoomDeviceRepository roomDeviceRepository) : IRoomDeviceQueryService
+public class DeviceQueryService(IDeviceRepository DeviceRepository) : IDeviceQueryService
 {
-    public async Task<IEnumerable<RoomDevice>> Handle(GetAllRoomDevicesQuery query)
+    public async Task<IEnumerable<Device>> Handle(GetAllDevicesQuery query)
     {
-        return await roomDeviceRepository.ListAsync();
+        return await DeviceRepository.ListAsync();
     }
 
-    public async Task<RoomDevice?> Handle(GetRoomDeviceByIdQuery query)
+    public async Task<Device?> Handle(GetDeviceByIdQuery query)
     {
-        return await roomDeviceRepository.FindByIdAsync(query.Id);
+        return await DeviceRepository.FindByIdAsync(query.Id);
     }
 
-    public async Task<IEnumerable<RoomDevice>> Handle(GetRoomDevicesByRoomIdQuery query)
+    public async Task<IEnumerable<Device>> Handle(GetDevicesByRoomIdQuery query)
     {
-        return await roomDeviceRepository.FindByRoomIdAsync(query.RoomId);
+        return await DeviceRepository.FindByRoomIdAsync(query.RoomId);
     }
 }
