@@ -19,7 +19,8 @@ public static class UpdateProfileCommandFromResourceAssembler
             resource.LastName,
             resource.Email,
             resource.Phone,
-            role
+            role,
+            resource.UserId
         );
     }
 }

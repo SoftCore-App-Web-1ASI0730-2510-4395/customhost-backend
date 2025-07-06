@@ -21,4 +21,7 @@ public record UpdateProfileResource
     public string? Phone { get; set; }
     
     public string? Role { get; set; }
+    
+    [Range(1, int.MaxValue, ErrorMessage = "User ID must be a positive integer.")]
+    public int? UserId { get; set; }
 }

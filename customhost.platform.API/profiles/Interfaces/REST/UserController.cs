@@ -84,6 +84,25 @@ public class ProfilesController(
         var resource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(Profile);
         return Ok(resource);
     }
+    
+    
+    
+    [HttpGet("userId/{userId}")]
+    [SwaggerOperation(
+        Summary = "Get Profile by User Id",
+        Description = "Retrieves a specific Profile by their User Id",
+        OperationId = "GetProfileByUserId")]
+    [SwaggerResponse(200, "Profile retrieved successfully", typeof(ProfileResource))]
+    [SwaggerResponse(404, "Profile not found", null)]
+    public async Task<ActionResult> GetProfileByUserId(int userId)
+    {
+        var Profile = await ProfileQueryService.GetByUserIdAsync(userId);
+        if (Profile == null)
+            return NotFound($"Profile with user id {userId} not found.");
+
+        var resource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(Profile);
+        return Ok(resource);
+    }
 
     [HttpGet("hotel/{hotelId:int}")]
     [SwaggerOperation(
