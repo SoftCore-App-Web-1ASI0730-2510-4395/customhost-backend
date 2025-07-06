@@ -36,7 +36,7 @@ public class UserDevicePreferenceConfiguration : IEntityTypeConfiguration<UserDe
         builder.Property(e => e.LastUpdated)
                .HasColumnName("last_updated");
         
-        // Relationship with IoTDevice
+        // Relationship with DeviceModel
         builder.HasOne(e => e.Device)
                .WithMany()
                .HasForeignKey(e => e.DeviceId)

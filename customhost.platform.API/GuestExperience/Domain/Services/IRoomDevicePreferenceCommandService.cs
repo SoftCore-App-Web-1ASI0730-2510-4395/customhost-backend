@@ -6,8 +6,8 @@ namespace customhost_backend.GuestExperience.Domain.Services;
 /// <summary>
 /// Room Device Preference command service interface
 /// </summary>
-public interface IRoomDevicePreferenceCommandService
+public interface IDevicePreferenceCommandService
 {
-    Task<RoomDevicePreference?> Handle(CreateRoomDevicePreferenceCommand command);
-    Task<RoomDevicePreference?> Handle(UpdateRoomDevicePreferenceCommand command);
+    Task<DevicePreference?> Handle(CreateDevicePreferenceCommand command);
+    Task<DevicePreference?> Handle(UpdateDevicePreferenceCommand command);
 }

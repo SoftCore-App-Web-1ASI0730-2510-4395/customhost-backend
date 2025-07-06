@@ -9,18 +9,18 @@ namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Repo
 /// <summary>
 /// Room Device Preference repository implementation using Entity Framework Core
 /// </summary>
-public class RoomDevicePreferenceRepository(AppDbContext context) : BaseRepository<RoomDevicePreference>(context), IRoomDevicePreferenceRepository
+public class DevicePreferenceRepository(AppDbContext context) : BaseRepository<DevicePreference>(context), IDevicePreferenceRepository
 {
-    public async Task<IEnumerable<RoomDevicePreference>> FindByRoomDeviceIdAsync(int roomDeviceId)
+    public async Task<IEnumerable<DevicePreference>> FindByDeviceIdAsync(int DeviceId)
     {
-        return await Context.Set<RoomDevicePreference>()
-            .Where(rdp => rdp.RoomDeviceId == roomDeviceId)
+        return await Context.Set<DevicePreference>()
+            .Where(rdp => rdp.DeviceId == DeviceId)
             .ToListAsync();
     }
 
-    public async Task<RoomDevicePreference?> FindByRoomDeviceIdSingleAsync(int roomDeviceId)
+    public async Task<DevicePreference?> FindByDeviceIdSingleAsync(int DeviceId)
     {
-        return await Context.Set<RoomDevicePreference>()
-            .FirstOrDefaultAsync(rdp => rdp.RoomDeviceId == roomDeviceId);
+        return await Context.Set<DevicePreference>()
+            .FirstOrDefaultAsync(rdp => rdp.DeviceId == DeviceId);
     }
 }

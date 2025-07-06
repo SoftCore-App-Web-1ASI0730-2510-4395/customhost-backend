@@ -5,38 +5,38 @@ namespace customhost_backend.GuestExperience.Domain.Model.Aggregates;
 /// <summary>
 /// Room Device aggregate root that represents an IoT device assigned to a specific room
 /// </summary>
-public class RoomDevice
+public class Device
 {
     public int Id { get; private set; }
     public int RoomId { get; private set; }
-    public int IoTDeviceId { get; private set; }
+    public int DeviceModelId { get; private set; }
     public string Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
     // Navigation properties
-    public virtual IoTDevice IoTDevice { get; private set; }
+    public virtual DeviceModel DeviceModel { get; private set; }
 
     // For EF Core
-    protected RoomDevice() { }
+    protected Device() { }
 
-    public RoomDevice(int roomId, int iotDeviceId, string status = "working")
+    public Device(int roomId, int DeviceModelId, string status = "working")
     {
         if (roomId <= 0)
             throw new ArgumentException("Room ID must be greater than zero", nameof(roomId));
         
-        if (iotDeviceId <= 0)
-            throw new ArgumentException("IoT Device ID must be greater than zero", nameof(iotDeviceId));
+        if (DeviceModelId <= 0)
+            throw new ArgumentException("IoT Device ID must be greater than zero", nameof(DeviceModelId));
 
         if (string.IsNullOrWhiteSpace(status))
             throw new ArgumentException("Status cannot be null or empty", nameof(status));
 
         RoomId = roomId;
-        IoTDeviceId = iotDeviceId;
+        DeviceModelId = DeviceModelId;
         Status = status;
         CreatedAt = DateTime.UtcNow;
     }
 
-    public RoomDevice(CreateRoomDeviceCommand command) : this(command.RoomId, command.IoTDeviceId, command.Status)
+    public Device(CreateDeviceCommand command) : this(command.RoomId, command.DeviceModelId, command.Status)
     {
     }
     

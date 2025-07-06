@@ -9,39 +9,39 @@ namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Repo
 /// <summary>
 /// Room Device repository implementation using Entity Framework Core
 /// </summary>
-public class RoomDeviceRepository(AppDbContext context) : BaseRepository<RoomDevice>(context), IRoomDeviceRepository
+public class DeviceRepository(AppDbContext context) : BaseRepository<Device>(context), IDeviceRepository
 {
-    public async Task<IEnumerable<RoomDevice>> FindByRoomIdAsync(int roomId)
+    public async Task<IEnumerable<Device>> FindByRoomIdAsync(int roomId)
     {
-        return await Context.Set<RoomDevice>()
-            .Include(rd => rd.IoTDevice)
+        return await Context.Set<Device>()
+            .Include(rd => rd.DeviceModel)
             .Where(rd => rd.RoomId == roomId)
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<RoomDevice>> FindByIoTDeviceIdAsync(int iotDeviceId)
+    public async Task<IEnumerable<Device>> FindByDeviceModelIdAsync(int DeviceModelId)
     {
-        return await Context.Set<RoomDevice>()
-            .Include(rd => rd.IoTDevice)
-            .Where(rd => rd.IoTDeviceId == iotDeviceId)
+        return await Context.Set<Device>()
+            .Include(rd => rd.DeviceModel)
+            .Where(rd => rd.DeviceModelId == DeviceModelId)
             .ToListAsync();
     }
 
-    public async Task<bool> ExistsDeviceInRoomAsync(int roomId, int iotDeviceId)
+    public async Task<bool> ExistsDeviceInRoomAsync(int roomId, int DeviceModelId)
     {
-        return await Context.Set<RoomDevice>()
-            .AnyAsync(rd => rd.RoomId == roomId && rd.IoTDeviceId == iotDeviceId);
-    }    public new async Task<RoomDevice?> FindByIdAsync(int id)
+        return await Context.Set<Device>()
+            .AnyAsync(rd => rd.RoomId == roomId && rd.DeviceModelId == DeviceModelId);
+    }    public new async Task<Device?> FindByIdAsync(int id)
     {
-        return await Context.Set<RoomDevice>()
-            .Include(rd => rd.IoTDevice)
+        return await Context.Set<Device>()
+            .Include(rd => rd.DeviceModel)
             .FirstOrDefaultAsync(rd => rd.Id == id);
     }
 
-    public new async Task<IEnumerable<RoomDevice>> ListAsync()
+    public new async Task<IEnumerable<Device>> ListAsync()
     {
-        return await Context.Set<RoomDevice>()
-            .Include(rd => rd.IoTDevice)
+        return await Context.Set<Device>()
+            .Include(rd => rd.DeviceModel)
             .ToListAsync();
     }
 }

@@ -9,44 +9,44 @@ namespace customhost_backend.GuestExperience.Application.Internal.CommandService
 /// <summary>
 /// IoT Device command service implementation
 /// </summary>
-public class IoTDeviceCommandService(
-    IIoTDeviceRepository iotDeviceRepository,
+public class DeviceModelCommandService(
+    IDeviceModelRepository DeviceModelRepository,
     IUnitOfWork unitOfWork
-) : IIoTDeviceCommandService
+) : IDeviceModelCommandService
 {
-    public async Task<IoTDevice?> Handle(CreateIoTDeviceCommand command)
+    public async Task<DeviceModel?> Handle(CreateDeviceModelCommand command)
     {
-        if (await iotDeviceRepository.ExistsByNameAsync(command.Name))
+        if (await DeviceModelRepository.ExistsByNameAsync(command.Name))
             throw new Exception($"IoT Device with name {command.Name} already exists");
 
-        var iotDevice = new IoTDevice(command);
-        await iotDeviceRepository.AddAsync(iotDevice);
+        var DeviceModel = new DeviceModel(command);
+        await DeviceModelRepository.AddAsync(DeviceModel);
         await unitOfWork.CompleteAsync();
-        return iotDevice;
+        return DeviceModel;
     }
 
-    public async Task<IoTDevice?> Handle(UpdateIoTDeviceCommand command)
+    public async Task<DeviceModel?> Handle(UpdateDeviceModelCommand command)
     {
-        var iotDevice = await iotDeviceRepository.FindByIdAsync(command.Id);
-        if (iotDevice is null) 
+        var DeviceModel = await DeviceModelRepository.FindByIdAsync(command.Id);
+        if (DeviceModel is null) 
             throw new Exception($"IoT Device with id {command.Id} not found");
 
         // Check if name is being changed and if new name already exists
-        if (iotDevice.Name != command.Name && await iotDeviceRepository.ExistsByNameAsync(command.Name))
+        if (DeviceModel.Name != command.Name && await DeviceModelRepository.ExistsByNameAsync(command.Name))
             throw new Exception($"IoT Device with name {command.Name} already exists");
 
-        iotDevice.UpdateDevice(command.Name, command.DeviceType, command.ConfigSchema);
+        DeviceModel.UpdateDevice(command.Name, command.DeviceType, command.ConfigSchema);
         await unitOfWork.CompleteAsync();
-        return iotDevice;
+        return DeviceModel;
     }
 
-    public async Task<bool> Handle(DeleteIoTDeviceCommand command)
+    public async Task<bool> Handle(DeleteDeviceModelCommand command)
     {
-        var iotDevice = await iotDeviceRepository.FindByIdAsync(command.Id);
-        if (iotDevice is null) 
+        var DeviceModel = await DeviceModelRepository.FindByIdAsync(command.Id);
+        if (DeviceModel is null) 
             throw new Exception($"IoT Device with id {command.Id} not found");
 
-        iotDeviceRepository.Remove(iotDevice);
+        DeviceModelRepository.Remove(DeviceModel);
         await unitOfWork.CompleteAsync();
         return true;
     }

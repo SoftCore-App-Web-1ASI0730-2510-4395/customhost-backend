@@ -5,6 +5,6 @@ namespace customhost_backend.GuestExperience.Domain.Model.Queries;
 /// <summary>
 /// Query to get Room Devices by Room Id
 /// </summary>
-public record GetRoomDevicesByRoomIdQuery(
+public record GetDevicesByRoomIdQuery(
     [Required] int RoomId
 );

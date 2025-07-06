@@ -3,7 +3,7 @@ namespace customhost_backend.GuestExperience.Interfaces.REST.Resources;
 /// <summary>
 /// IoT Device resource for API responses
 /// </summary>
-public record IoTDeviceResource(
+public record DeviceModelResource(
     int Id,
     string Name,
     string DeviceType,

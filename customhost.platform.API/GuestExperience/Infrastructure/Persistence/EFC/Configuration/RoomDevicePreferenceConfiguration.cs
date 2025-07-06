@@ -7,16 +7,16 @@ namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Conf
 /// <summary>
 /// Room Device Preference entity configuration for Entity Framework Core
 /// </summary>
-public class RoomDevicePreferenceConfiguration : IEntityTypeConfiguration<RoomDevicePreference>
+public class DevicePreferenceConfiguration : IEntityTypeConfiguration<DevicePreference>
 {
-    public void Configure(EntityTypeBuilder<RoomDevicePreference> builder)
+    public void Configure(EntityTypeBuilder<DevicePreference> builder)
     {
         builder.ToTable("room_device_preferences");
         
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
         
-        builder.Property(e => e.RoomDeviceId)
+        builder.Property(e => e.DeviceId)
                .HasColumnName("room_device_id")
                .IsRequired();
                
@@ -28,10 +28,10 @@ public class RoomDevicePreferenceConfiguration : IEntityTypeConfiguration<RoomDe
         builder.Property(e => e.CreatedAt)
                .HasColumnName("created_at");
         
-        // Relationship with RoomDevice
-        builder.HasOne(e => e.RoomDevice)
+        // Relationship with Device
+        builder.HasOne(e => e.Device)
                .WithMany()
-               .HasForeignKey(e => e.RoomDeviceId)
+               .HasForeignKey(e => e.DeviceId)
                .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -20,11 +20,11 @@ public class AnalyticsController(
     [SwaggerOperation(
         Summary = "Gets IoT devices online status",
         Description = "Returns the current status of IoT devices including online/offline counts and percentages.",
-        OperationId = "GetIoTDevicesOnlineStatus")]
-    [SwaggerResponse(StatusCodes.Status200OK, "IoT devices status retrieved successfully", typeof(IoTDevicesOnlineStatusResource))]
-    public async Task<IActionResult> GetIoTDevicesOnlineStatus()
+        OperationId = "GetDeviceModelsOnlineStatus")]
+    [SwaggerResponse(StatusCodes.Status200OK, "IoT devices status retrieved successfully", typeof(DeviceModelsOnlineStatusResource))]
+    public async Task<IActionResult> GetDeviceModelsOnlineStatus()
     {
-        var query = new GetIoTDevicesOnlineStatusQuery();
+        var query = new GetDeviceModelsOnlineStatusQuery();
         var result = await analyticsSnapshotQueryService.Handle(query);
         return Ok(result);
     }

@@ -9,16 +9,16 @@ namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Repo
 /// <summary>
 /// IoT Device repository implementation using Entity Framework Core
 /// </summary>
-public class IoTDeviceRepository(AppDbContext context) : BaseRepository<IoTDevice>(context), IIoTDeviceRepository
+public class DeviceModelRepository(AppDbContext context) : BaseRepository<DeviceModel>(context), IDeviceModelRepository
 {
     public async Task<bool> ExistsByNameAsync(string name)
     {
-        return await Context.Set<IoTDevice>().AnyAsync(d => d.Name == name);
+        return await Context.Set<DeviceModel>().AnyAsync(d => d.Name == name);
     }
 
-    public async Task<IEnumerable<IoTDevice>> FindByDeviceTypeAsync(string deviceType)
+    public async Task<IEnumerable<DeviceModel>> FindByDeviceTypeAsync(string deviceType)
     {
-        return await Context.Set<IoTDevice>()
+        return await Context.Set<DeviceModel>()
             .Where(d => d.DeviceType == deviceType)
             .ToListAsync();
     }

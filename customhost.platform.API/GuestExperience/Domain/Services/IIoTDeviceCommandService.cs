@@ -6,9 +6,9 @@ namespace customhost_backend.GuestExperience.Domain.Services;
 /// <summary>
 /// IoT Device command service interface
 /// </summary>
-public interface IIoTDeviceCommandService
+public interface IDeviceModelCommandService
 {
-    Task<IoTDevice?> Handle(CreateIoTDeviceCommand command);
-    Task<IoTDevice?> Handle(UpdateIoTDeviceCommand command);
-    Task<bool> Handle(DeleteIoTDeviceCommand command);
+    Task<DeviceModel?> Handle(CreateDeviceModelCommand command);
+    Task<DeviceModel?> Handle(UpdateDeviceModelCommand command);
+    Task<bool> Handle(DeleteDeviceModelCommand command);
 }

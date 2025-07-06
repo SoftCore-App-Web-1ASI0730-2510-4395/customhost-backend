@@ -14,14 +14,14 @@ public class AnalyticsSnapshotQueryService(
     ICrmContextFacade crmContextFacade
 ) : IAnalyticsSnapshotQueryService
 {
-    public async Task<IoTDevicesOnlineStatusResource> Handle(GetIoTDevicesOnlineStatusQuery query)
+    public async Task<DeviceModelsOnlineStatusResource> Handle(GetDeviceModelsOnlineStatusQuery query)
     {
         var totalDevices = await guestExperienceContextFacade.GetTotalDevicesCountAsync();
         var onlineDevices = await guestExperienceContextFacade.GetOnlineDevicesCountAsync();
         var offlineDevices = totalDevices - onlineDevices;
         var onlinePercentage = totalDevices > 0 ? Math.Round((double)onlineDevices / totalDevices * 100, 2) : 0;
 
-        return new IoTDevicesOnlineStatusResource(
+        return new DeviceModelsOnlineStatusResource(
             totalDevices,
             onlineDevices,
             offlineDevices,

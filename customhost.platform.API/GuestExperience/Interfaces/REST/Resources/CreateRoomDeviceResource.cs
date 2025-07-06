@@ -3,8 +3,8 @@ namespace customhost_backend.GuestExperience.Interfaces.REST.Resources;
 /// <summary>
 /// Create Room Device resource for API requests
 /// </summary>
-public record CreateRoomDeviceResource(
+public record CreateDeviceResource(
     int RoomId,
-    int IoTDeviceId,
+    int DeviceModelId,
     string Status = "working"
 );

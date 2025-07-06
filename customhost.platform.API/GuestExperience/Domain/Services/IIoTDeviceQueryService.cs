@@ -6,8 +6,8 @@ namespace customhost_backend.GuestExperience.Domain.Services;
 /// <summary>
 /// IoT Device query service interface
 /// </summary>
-public interface IIoTDeviceQueryService
+public interface IDeviceModelQueryService
 {
-    Task<IEnumerable<IoTDevice>> Handle(GetAllIoTDevicesQuery query);
-    Task<IoTDevice?> Handle(GetIoTDeviceByIdQuery query);
+    Task<IEnumerable<DeviceModel>> Handle(GetAllDeviceModelsQuery query);
+    Task<DeviceModel?> Handle(GetDeviceModelByIdQuery query);
 }

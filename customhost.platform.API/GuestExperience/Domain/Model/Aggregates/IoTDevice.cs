@@ -5,7 +5,7 @@ namespace customhost_backend.GuestExperience.Domain.Model.Aggregates;
 /// <summary>
 /// IoT Device aggregate root that represents a smart device available in the hotel
 /// </summary>
-public class IoTDevice
+public class DeviceModel
 {
     public int Id { get; private set; }
     public string Name { get; private set; }
@@ -15,9 +15,9 @@ public class IoTDevice
     public DateTime CreatedAt { get; private set; }
 
     // For EF Core
-    protected IoTDevice() { }
+    protected DeviceModel() { }
 
-    public IoTDevice(string name, string deviceType, string configSchema)
+    public DeviceModel(string name, string deviceType, string configSchema)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Device name cannot be null or empty", nameof(name));
@@ -32,7 +32,7 @@ public class IoTDevice
         CreatedAt = DateTime.UtcNow;
     }
 
-    public IoTDevice(CreateIoTDeviceCommand command) : this(command.Name, command.DeviceType, command.ConfigSchema)
+    public DeviceModel(CreateDeviceModelCommand command) : this(command.Name, command.DeviceType, command.ConfigSchema)
     {
     }
 

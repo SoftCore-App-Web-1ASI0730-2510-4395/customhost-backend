@@ -5,6 +5,6 @@ namespace customhost_backend.GuestExperience.Domain.Model.Commands;
 /// <summary>
 /// Command to delete a Room Device
 /// </summary>
-public record DeleteRoomDeviceCommand(
+public record DeleteDeviceCommand(
     [Required] int Id
 );

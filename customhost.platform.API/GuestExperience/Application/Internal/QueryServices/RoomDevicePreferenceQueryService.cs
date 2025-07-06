@@ -8,20 +8,20 @@ namespace customhost_backend.GuestExperience.Application.Internal.QueryServices;
 /// <summary>
 /// Room Device Preference query service implementation
 /// </summary>
-public class RoomDevicePreferenceQueryService(IRoomDevicePreferenceRepository roomDevicePreferenceRepository) : IRoomDevicePreferenceQueryService
+public class DevicePreferenceQueryService(IDevicePreferenceRepository DevicePreferenceRepository) : IDevicePreferenceQueryService
 {
-    public async Task<IEnumerable<RoomDevicePreference>> Handle(GetAllRoomDevicePreferencesQuery query)
+    public async Task<IEnumerable<DevicePreference>> Handle(GetAllDevicePreferencesQuery query)
     {
-        return await roomDevicePreferenceRepository.ListAsync();
+        return await DevicePreferenceRepository.ListAsync();
     }
 
-    public async Task<RoomDevicePreference?> Handle(GetRoomDevicePreferenceByIdQuery query)
+    public async Task<DevicePreference?> Handle(GetDevicePreferenceByIdQuery query)
     {
-        return await roomDevicePreferenceRepository.FindByIdAsync(query.Id);
+        return await DevicePreferenceRepository.FindByIdAsync(query.Id);
     }
 
-    public async Task<IEnumerable<RoomDevicePreference>> Handle(GetRoomDevicePreferencesByRoomDeviceIdQuery query)
+    public async Task<IEnumerable<DevicePreference>> Handle(GetDevicePreferencesByDeviceIdQuery query)
     {
-        return await roomDevicePreferenceRepository.FindByRoomDeviceIdAsync(query.RoomDeviceId);
+        return await DevicePreferenceRepository.FindByDeviceIdAsync(query.DeviceId);
     }
 }

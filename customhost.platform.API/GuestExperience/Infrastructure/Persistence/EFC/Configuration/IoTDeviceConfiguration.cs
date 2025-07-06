@@ -7,9 +7,9 @@ namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Conf
 /// <summary>
 /// IoT Device entity configuration for Entity Framework Core
 /// </summary>
-public class IoTDeviceConfiguration : IEntityTypeConfiguration<IoTDevice>
+public class DeviceModelConfiguration : IEntityTypeConfiguration<DeviceModel>
 {
-    public void Configure(EntityTypeBuilder<IoTDevice> builder)
+    public void Configure(EntityTypeBuilder<DeviceModel> builder)
     {
         builder.ToTable("iot_devices");
         

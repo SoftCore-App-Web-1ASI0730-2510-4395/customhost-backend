@@ -3,9 +3,9 @@ namespace customhost_backend.GuestExperience.Interfaces.REST.Resources;
 /// <summary>
 /// Room Device Preference resource for API responses
 /// </summary>
-public record RoomDevicePreferenceResource(
+public record DevicePreferenceResource(
     int Id,
-    int RoomDeviceId,
+    int DeviceId,
     string Preferences,
     DateTime CreatedAt
 );

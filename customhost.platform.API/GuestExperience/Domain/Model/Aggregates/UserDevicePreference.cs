@@ -15,7 +15,7 @@ public class UserDevicePreference
     public DateTime LastUpdated { get; private set; }
 
     // Navigation properties
-    public virtual IoTDevice Device { get; private set; }
+    public virtual DeviceModel Device { get; private set; }
 
     // For EF Core
     protected UserDevicePreference() { }

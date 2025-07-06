@@ -6,11 +6,11 @@ namespace customhost_backend.GuestExperience.Domain.Services;
 /// <summary>
 /// Room Device command service interface
 /// </summary>
-public interface IRoomDeviceCommandService
+public interface IDeviceCommandService
 {
-    Task<RoomDevice?> Handle(CreateRoomDeviceCommand command);
-    Task<RoomDevice?> Handle(UpdateRoomDeviceCommand command);
+    Task<Device?> Handle(CreateDeviceCommand command);
+    Task<Device?> Handle(UpdateDeviceCommand command);
     
-    Task<RoomDevice?> Handle(ChangeStatusRoomDeviceCommand command);
-    Task<bool> Handle(DeleteRoomDeviceCommand command);
+    Task<Device?> Handle(ChangeStatusDeviceCommand command);
+    Task<bool> Handle(DeleteDeviceCommand command);
 }

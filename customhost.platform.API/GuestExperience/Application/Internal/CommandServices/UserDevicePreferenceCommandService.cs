@@ -11,15 +11,15 @@ namespace customhost_backend.GuestExperience.Application.Internal.CommandService
 /// </summary>
 public class UserDevicePreferenceCommandService(
     IUserDevicePreferenceRepository userDevicePreferenceRepository,
-    IIoTDeviceRepository iotDeviceRepository,
+    IDeviceModelRepository DeviceModelRepository,
     IUnitOfWork unitOfWork
 ) : IUserDevicePreferenceCommandService
 {
     public async Task<UserDevicePreference?> Handle(CreateUserDevicePreferenceCommand command)
     {
         // Verify IoT Device exists
-        var iotDevice = await iotDeviceRepository.FindByIdAsync(command.DeviceId);
-        if (iotDevice is null)
+        var DeviceModel = await DeviceModelRepository.FindByIdAsync(command.DeviceId);
+        if (DeviceModel is null)
             throw new Exception($"Device with id {command.DeviceId} not found");
 
         // Check if user already has preference for this device
@@ -40,8 +40,8 @@ public class UserDevicePreferenceCommandService(
             throw new Exception($"User Device Preference with id {command.Id} not found");
 
         // Verify IoT Device exists
-        var iotDevice = await iotDeviceRepository.FindByIdAsync(command.DeviceId);
-        if (iotDevice is null)
+        var DeviceModel = await DeviceModelRepository.FindByIdAsync(command.DeviceId);
+        if (DeviceModel is null)
             throw new Exception($"Device with id {command.DeviceId} not found");
 
         userDevicePreference.UpdatePreference(command.CustomName, command.Overrides);

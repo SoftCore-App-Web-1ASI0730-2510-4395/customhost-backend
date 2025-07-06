@@ -5,32 +5,32 @@ namespace customhost_backend.GuestExperience.Domain.Model.Aggregates;
 /// <summary>
 /// Room Device Preference aggregate root that stores configuration preferences for a specific room device
 /// </summary>
-public class RoomDevicePreference
+public class DevicePreference
 {
     public int Id { get; private set; }
-    public int RoomDeviceId { get; private set; }
+    public int DeviceId { get; private set; }
     public string Preferences { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime? LastUpdated { get; private set; }
 
     // Navigation properties
-    public virtual RoomDevice RoomDevice { get; private set; }
+    public virtual Device Device { get; private set; }
 
     // For EF Core
-    protected RoomDevicePreference() { }
+    protected DevicePreference() { }
 
-    public RoomDevicePreference(int roomDeviceId, string preferences)
+    public DevicePreference(int DeviceId, string preferences)
     {
-        if (roomDeviceId <= 0)
-            throw new ArgumentException("Room Device ID must be greater than zero", nameof(roomDeviceId));
+        if (DeviceId <= 0)
+            throw new ArgumentException("Room Device ID must be greater than zero", nameof(DeviceId));
 
-        RoomDeviceId = roomDeviceId;
+        DeviceId = DeviceId;
         Preferences = preferences ?? "{}";
         CreatedAt = DateTime.UtcNow;
         LastUpdated = DateTime.UtcNow;
     }
 
-    public RoomDevicePreference(CreateRoomDevicePreferenceCommand command) : this(command.RoomDeviceId, command.Preferences)
+    public DevicePreference(CreateDevicePreferenceCommand command) : this(command.DeviceId, command.Preferences)
     {
     }
 

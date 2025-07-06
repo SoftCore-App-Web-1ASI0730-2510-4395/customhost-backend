@@ -4,20 +4,20 @@ using customhost_backend.GuestExperience.Interfaces.REST.Resources;
 namespace customhost_backend.GuestExperience.Interfaces.REST.Transform;
 
 /// <summary>
-/// Assembler class to convert RoomDevicePreference entity to RoomDevicePreferenceResource
+/// Assembler class to convert DevicePreference entity to DevicePreferenceResource
 /// </summary>
-public static class RoomDevicePreferenceResourceFromEntityAssembler
+public static class DevicePreferenceResourceFromEntityAssembler
 {
     /// <summary>
-    /// Convert RoomDevicePreference entity to RoomDevicePreferenceResource
+    /// Convert DevicePreference entity to DevicePreferenceResource
     /// </summary>
-    /// <param name="entity"><see cref="RoomDevicePreference"/> entity to convert</param>
-    /// <returns><see cref="RoomDevicePreferenceResource"/> converted from <see cref="RoomDevicePreference"/> entity</returns>
-    public static RoomDevicePreferenceResource ToResourceFromEntity(RoomDevicePreference entity)
+    /// <param name="entity"><see cref="DevicePreference"/> entity to convert</param>
+    /// <returns><see cref="DevicePreferenceResource"/> converted from <see cref="DevicePreference"/> entity</returns>
+    public static DevicePreferenceResource ToResourceFromEntity(DevicePreference entity)
     {
-        return new RoomDevicePreferenceResource(
+        return new DevicePreferenceResource(
             entity.Id,
-            entity.RoomDeviceId,
+            entity.DeviceId,
             entity.Preferences,
             entity.CreatedAt
         );

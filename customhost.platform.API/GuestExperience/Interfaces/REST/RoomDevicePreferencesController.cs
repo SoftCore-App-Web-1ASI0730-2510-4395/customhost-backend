@@ -13,22 +13,22 @@ namespace customhost_backend.GuestExperience.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available Room Device Preference Endpoints")]
-public class RoomDevicePreferencesController(
-    IRoomDevicePreferenceCommandService roomDevicePreferenceCommandService,
-    IRoomDevicePreferenceQueryService roomDevicePreferenceQueryService
+public class DevicePreferencesController(
+    IDevicePreferenceCommandService DevicePreferenceCommandService,
+    IDevicePreferenceQueryService DevicePreferenceQueryService
 ) : ControllerBase
 {
     [HttpGet]
     [SwaggerOperation(
         Summary = "Gets all room device preferences",
         Description = "Get all room device preferences.",
-        OperationId = "GetAllRoomDevicePreferences")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Room device preferences found", typeof(IEnumerable<RoomDevicePreferenceResource>))]
-    public async Task<IActionResult> GetAllRoomDevicePreferences()
+        OperationId = "GetAllDevicePreferences")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Room device preferences found", typeof(IEnumerable<DevicePreferenceResource>))]
+    public async Task<IActionResult> GetAllDevicePreferences()
     {
-        var getAllRoomDevicePreferencesQuery = new GetAllRoomDevicePreferencesQuery();
-        var preferences = await roomDevicePreferenceQueryService.Handle(getAllRoomDevicePreferencesQuery);
-        var preferenceResources = preferences.Select(RoomDevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity);
+        var getAllDevicePreferencesQuery = new GetAllDevicePreferencesQuery();
+        var preferences = await DevicePreferenceQueryService.Handle(getAllDevicePreferencesQuery);
+        var preferenceResources = preferences.Select(DevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(preferenceResources);
     }
 
@@ -36,29 +36,29 @@ public class RoomDevicePreferencesController(
     [SwaggerOperation(
         Summary = "Gets a room device preference by its ID",
         Description = "Get a room device preference by given preference ID.",
-        OperationId = "GetRoomDevicePreferenceById")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Room device preference found", typeof(RoomDevicePreferenceResource))]
+        OperationId = "GetDevicePreferenceById")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Room device preference found", typeof(DevicePreferenceResource))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Room device preference not found")]
-    public async Task<IActionResult> GetRoomDevicePreferenceById([FromRoute] int preferenceId)
+    public async Task<IActionResult> GetDevicePreferenceById([FromRoute] int preferenceId)
     {
-        var getRoomDevicePreferenceByIdQuery = new GetRoomDevicePreferenceByIdQuery(preferenceId);
-        var preference = await roomDevicePreferenceQueryService.Handle(getRoomDevicePreferenceByIdQuery);
+        var getDevicePreferenceByIdQuery = new GetDevicePreferenceByIdQuery(preferenceId);
+        var preference = await DevicePreferenceQueryService.Handle(getDevicePreferenceByIdQuery);
         if (preference is null) return NotFound();
-        var preferenceResource = RoomDevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity(preference);
+        var preferenceResource = DevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity(preference);
         return Ok(preferenceResource);
     }
 
-    [HttpGet("room-device/{roomDeviceId:int}")]
+    [HttpGet("room-device/{DeviceId:int}")]
     [SwaggerOperation(
         Summary = "Gets preferences for a specific room device",
         Description = "Get all preferences for a specific room device.",
-        OperationId = "GetRoomDevicePreferencesByRoomDeviceId")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Room device preferences found", typeof(IEnumerable<RoomDevicePreferenceResource>))]
-    public async Task<IActionResult> GetRoomDevicePreferencesByRoomDeviceId([FromRoute] int roomDeviceId)
+        OperationId = "GetDevicePreferencesByDeviceId")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Room device preferences found", typeof(IEnumerable<DevicePreferenceResource>))]
+    public async Task<IActionResult> GetDevicePreferencesByDeviceId([FromRoute] int DeviceId)
     {
-        var getRoomDevicePreferencesByRoomDeviceIdQuery = new GetRoomDevicePreferencesByRoomDeviceIdQuery(roomDeviceId);
-        var preferences = await roomDevicePreferenceQueryService.Handle(getRoomDevicePreferencesByRoomDeviceIdQuery);
-        var preferenceResources = preferences.Select(RoomDevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity);
+        var getDevicePreferencesByDeviceIdQuery = new GetDevicePreferencesByDeviceIdQuery(DeviceId);
+        var preferences = await DevicePreferenceQueryService.Handle(getDevicePreferencesByDeviceIdQuery);
+        var preferenceResources = preferences.Select(DevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(preferenceResources);
     }
 
@@ -66,31 +66,31 @@ public class RoomDevicePreferencesController(
     [SwaggerOperation(
         Summary = "Creates new room device preferences",
         Description = "Creates preferences for a specific room device.",
-        OperationId = "CreateRoomDevicePreference")]
-    [SwaggerResponse(StatusCodes.Status201Created, "Room device preference created successfully", typeof(RoomDevicePreferenceResource))]
+        OperationId = "CreateDevicePreference")]
+    [SwaggerResponse(StatusCodes.Status201Created, "Room device preference created successfully", typeof(DevicePreferenceResource))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid room device preference data")]
-    public async Task<IActionResult> CreateRoomDevicePreference([FromBody] CreateRoomDevicePreferenceResource resource)
+    public async Task<IActionResult> CreateDevicePreference([FromBody] CreateDevicePreferenceResource resource)
     {
-        var createRoomDevicePreferenceCommand = CreateRoomDevicePreferenceCommandFromResourceAssembler.ToCommandFromResource(resource);
-        var preference = await roomDevicePreferenceCommandService.Handle(createRoomDevicePreferenceCommand);
+        var createDevicePreferenceCommand = CreateDevicePreferenceCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var preference = await DevicePreferenceCommandService.Handle(createDevicePreferenceCommand);
         if (preference is null) return BadRequest("Room device preference could not be created.");
-        var preferenceResource = RoomDevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity(preference);
-        return CreatedAtAction(nameof(GetRoomDevicePreferenceById), new { preferenceId = preference.Id }, preferenceResource);
+        var preferenceResource = DevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity(preference);
+        return CreatedAtAction(nameof(GetDevicePreferenceById), new { preferenceId = preference.Id }, preferenceResource);
     }
 
     [HttpPut("{preferenceId:int}")]
     [SwaggerOperation(
         Summary = "Updates room device preferences",
         Description = "Updates existing room device preferences.",
-        OperationId = "UpdateRoomDevicePreference")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Room device preference updated successfully", typeof(RoomDevicePreferenceResource))]
+        OperationId = "UpdateDevicePreference")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Room device preference updated successfully", typeof(DevicePreferenceResource))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Room device preference not found")]
-    public async Task<IActionResult> UpdateRoomDevicePreference([FromRoute] int preferenceId, [FromBody] UpdateRoomDevicePreferenceResource resource)
+    public async Task<IActionResult> UpdateDevicePreference([FromRoute] int preferenceId, [FromBody] UpdateDevicePreferenceResource resource)
     {
-        var updateRoomDevicePreferenceCommand = new UpdateRoomDevicePreferenceCommand(preferenceId, resource.RoomDeviceId, resource.Preferences);
-        var preference = await roomDevicePreferenceCommandService.Handle(updateRoomDevicePreferenceCommand);
+        var updateDevicePreferenceCommand = new UpdateDevicePreferenceCommand(preferenceId, resource.DeviceId, resource.Preferences);
+        var preference = await DevicePreferenceCommandService.Handle(updateDevicePreferenceCommand);
         if (preference is null) return NotFound();
-        var preferenceResource = RoomDevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity(preference);
+        var preferenceResource = DevicePreferenceResourceFromEntityAssembler.ToResourceFromEntity(preference);
         return Ok(preferenceResource);
     }
 }

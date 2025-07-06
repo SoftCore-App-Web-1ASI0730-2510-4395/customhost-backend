@@ -9,69 +9,69 @@ namespace customhost_backend.GuestExperience.Application.Internal.CommandService
 /// <summary>
 /// Room Device command service implementation
 /// </summary>
-public class RoomDeviceCommandService(
-    IRoomDeviceRepository roomDeviceRepository,
-    IIoTDeviceRepository iotDeviceRepository,
+public class DeviceCommandService(
+    IDeviceRepository DeviceRepository,
+    IDeviceModelRepository DeviceModelRepository,
     IUnitOfWork unitOfWork
-) : IRoomDeviceCommandService
+) : IDeviceCommandService
 {
 
-    public async Task<RoomDevice> Handle(ChangeStatusRoomDeviceCommand command)
+    public async Task<Device> Handle(ChangeStatusDeviceCommand command)
     {
-        var roomDevice = await roomDeviceRepository.FindByIdAsync(command.Id);
-        if (roomDevice == null) return null;
+        var Device = await DeviceRepository.FindByIdAsync(command.Id);
+        if (Device == null) return null;
 
-        roomDevice.ChangeStatus(command.Status);
-        roomDeviceRepository.Update(roomDevice);
+        Device.ChangeStatus(command.Status);
+        DeviceRepository.Update(Device);
         await unitOfWork.CompleteAsync();
-        return roomDevice;
+        return Device;
     }
     
-    public async Task<RoomDevice?> Handle(CreateRoomDeviceCommand command)
+    public async Task<Device?> Handle(CreateDeviceCommand command)
     {
         // Verify IoT Device exists
-        var iotDevice = await iotDeviceRepository.FindByIdAsync(command.IoTDeviceId);
-        if (iotDevice is null)
-            throw new Exception($"IoT Device with id {command.IoTDeviceId} not found");
+        var DeviceModel = await DeviceModelRepository.FindByIdAsync(command.DeviceModelId);
+        if (DeviceModel is null)
+            throw new Exception($"IoT Device with id {command.DeviceModelId} not found");
 
         // Check if device is already assigned to this room
-        if (await roomDeviceRepository.ExistsDeviceInRoomAsync(command.RoomId, command.IoTDeviceId))
-            throw new Exception($"IoT Device {command.IoTDeviceId} is already assigned to room {command.RoomId}");
+        if (await DeviceRepository.ExistsDeviceInRoomAsync(command.RoomId, command.DeviceModelId))
+            throw new Exception($"IoT Device {command.DeviceModelId} is already assigned to room {command.RoomId}");
 
-        var roomDevice = new RoomDevice(command);
-        await roomDeviceRepository.AddAsync(roomDevice);
+        var Device = new Device(command);
+        await DeviceRepository.AddAsync(Device);
         await unitOfWork.CompleteAsync();
-        return roomDevice;
+        return Device;
     }
 
-    public async Task<RoomDevice?> Handle(UpdateRoomDeviceCommand command)
+    public async Task<Device?> Handle(UpdateDeviceCommand command)
     {
-        var roomDevice = await roomDeviceRepository.FindByIdAsync(command.Id);
-        if (roomDevice is null)
+        var Device = await DeviceRepository.FindByIdAsync(command.Id);
+        if (Device is null)
             throw new Exception($"Room Device with id {command.Id} not found");
 
         // Verify IoT Device exists
-        var iotDevice = await iotDeviceRepository.FindByIdAsync(command.IoTDeviceId);
-        if (iotDevice is null)
-            throw new Exception($"IoT Device with id {command.IoTDeviceId} not found");
+        var DeviceModel = await DeviceModelRepository.FindByIdAsync(command.DeviceModelId);
+        if (DeviceModel is null)
+            throw new Exception($"IoT Device with id {command.DeviceModelId} not found");
 
         // Check if we're changing the assignment and if the new assignment conflicts
-        if ((roomDevice.RoomId != command.RoomId || roomDevice.IoTDeviceId != command.IoTDeviceId) &&
-            await roomDeviceRepository.ExistsDeviceInRoomAsync(command.RoomId, command.IoTDeviceId))
-            throw new Exception($"IoT Device {command.IoTDeviceId} is already assigned to room {command.RoomId}");
+        if ((Device.RoomId != command.RoomId || Device.DeviceModelId != command.DeviceModelId) &&
+            await DeviceRepository.ExistsDeviceInRoomAsync(command.RoomId, command.DeviceModelId))
+            throw new Exception($"IoT Device {command.DeviceModelId} is already assigned to room {command.RoomId}");
 
-        roomDevice.UpdateStatus(command.Status);
+        Device.UpdateStatus(command.Status);
         await unitOfWork.CompleteAsync();
-        return roomDevice;
+        return Device;
     }
 
-    public async Task<bool> Handle(DeleteRoomDeviceCommand command)
+    public async Task<bool> Handle(DeleteDeviceCommand command)
     {
-        var roomDevice = await roomDeviceRepository.FindByIdAsync(command.Id);
-        if (roomDevice is null)
+        var Device = await DeviceRepository.FindByIdAsync(command.Id);
+        if (Device is null)
             throw new Exception($"Room Device with id {command.Id} not found");
 
-        roomDeviceRepository.Remove(roomDevice);
+        DeviceRepository.Remove(Device);
         await unitOfWork.CompleteAsync();
         return true;
     }

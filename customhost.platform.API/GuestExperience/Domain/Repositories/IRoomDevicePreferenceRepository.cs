@@ -6,8 +6,8 @@ namespace customhost_backend.GuestExperience.Domain.Repositories;
 /// <summary>
 /// Repository interface for Room Device Preference aggregate
 /// </summary>
-public interface IRoomDevicePreferenceRepository : IBaseRepository<RoomDevicePreference>
+public interface IDevicePreferenceRepository : IBaseRepository<DevicePreference>
 {
-    Task<IEnumerable<RoomDevicePreference>> FindByRoomDeviceIdAsync(int roomDeviceId);
-    Task<RoomDevicePreference?> FindByRoomDeviceIdSingleAsync(int roomDeviceId);
+    Task<IEnumerable<DevicePreference>> FindByDeviceIdAsync(int DeviceId);
+    Task<DevicePreference?> FindByDeviceIdSingleAsync(int DeviceId);
 }
