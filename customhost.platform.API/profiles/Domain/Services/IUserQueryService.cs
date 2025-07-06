@@ -30,6 +30,8 @@ public interface IProfileQueryService
     /// <returns>Profile or null if not found</returns>
     Task<Profile?> GetByEmailAsync(string email);
     
+    Task<Profile?> GetByUserIdAsync(int userId);
+    
     /// <summary>
     /// Get Profiles by hotel ID
     /// </summary>

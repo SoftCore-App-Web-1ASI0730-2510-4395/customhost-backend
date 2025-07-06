@@ -16,6 +16,12 @@ public class ProfileRepository(AppDbContext context)
             .FirstOrDefaultAsync(u => u.Email == email);
     }
 
+    public async Task<Profile?> FindByUserIdAsync(int userId)
+    {
+        return await Context.Set<Profile>()
+            .FirstOrDefaultAsync(u => u.UserId == userId);
+    }
+    
     public async Task<IEnumerable<Profile>> FindByHotelIdAsync(int hotelId)
     {
         return await Context.Set<Profile>()
@@ -29,4 +35,5 @@ public class ProfileRepository(AppDbContext context)
             .Where(u => u.Role == role)
             .ToListAsync();
     }
+    
 }

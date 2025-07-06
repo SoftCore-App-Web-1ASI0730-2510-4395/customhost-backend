@@ -10,6 +10,7 @@ public static class ModelBuilderExtensions
         builder.Entity<Profile>().HasKey(p => p.Id);
         builder.Entity<Profile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Profile>().Property(p => p.HotelId).IsRequired(false);
+        builder.Entity<Profile>().Property(p => p.UserId).IsRequired(false);
 
         
     }

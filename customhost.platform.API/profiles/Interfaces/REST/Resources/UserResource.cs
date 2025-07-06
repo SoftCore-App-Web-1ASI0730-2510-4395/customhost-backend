@@ -8,5 +8,6 @@ public record ProfileResource(
     string Email,
     string Phone,
     string Role,
-    DateTime CreatedAt
+    DateTime CreatedAt,
+    int? UserId
 );

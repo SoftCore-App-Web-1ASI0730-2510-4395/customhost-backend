@@ -22,7 +22,9 @@ public class Profile
     public EProfileRole Role { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
-    // For EF Core
+    public int? UserId { get; private set; }
+
+// For EF Core
     protected Profile() { }
 
     public Profile(CreateProfileCommand command)
@@ -35,6 +37,8 @@ public class Profile
         Phone = command.Phone;
         Role = command.Role;
         CreatedAt = DateTime.UtcNow;
+        UserId = command.UserId;
+        
     }
 
     public void UpdateProfile(UpdateProfileCommand command)
@@ -56,6 +60,11 @@ public class Profile
 
         if (command.Role.HasValue)
             Role = command.Role.Value;
+
+        if (command.UserId.HasValue)
+            UserId = command.UserId.Value;
+
+
     }
 
     public void UpdatePassword(string newPassword)

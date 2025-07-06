@@ -18,7 +18,8 @@ public static class CreateProfileCommandFromResourceAssembler
             resource.Email ?? "",
             resource.Password ?? "",
             resource.Phone ?? "",
-            role
+            role,
+            resource.UserId
         );
     }
 }

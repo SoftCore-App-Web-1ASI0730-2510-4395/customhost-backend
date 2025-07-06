@@ -9,5 +9,6 @@ public record CreateProfileCommand(
     string Email,
     string Password,
     string Phone,
-    EProfileRole Role
+    EProfileRole Role,
+    int? UserId
 );

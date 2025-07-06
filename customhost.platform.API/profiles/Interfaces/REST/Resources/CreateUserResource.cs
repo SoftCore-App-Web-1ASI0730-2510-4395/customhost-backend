@@ -29,5 +29,10 @@ public record CreateProfileResource(
     string? Phone,
 
     [param: Required(ErrorMessage = "Role es obligatorio.")]
-    string? Role
+    string? Role,
+    
+    [param: Range(1, int.MaxValue, ErrorMessage = "UserId debe ser un entero positivo.")]
+    int? UserId
+    
+    
 );

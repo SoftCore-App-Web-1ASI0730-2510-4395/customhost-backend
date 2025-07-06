@@ -15,7 +15,8 @@ public static class ProfileResourceFromEntityAssembler
             Profile.Email,
             Profile.Phone,
             Profile.Role.ToString(),
-            Profile.CreatedAt
+            Profile.CreatedAt,
+            Profile.UserId
         );
     
     public static IEnumerable<ProfileResource> ToResourcesFromEntities(IEnumerable<Profile> profiles) =>

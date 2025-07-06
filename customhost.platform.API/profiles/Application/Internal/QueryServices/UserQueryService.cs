@@ -35,6 +35,10 @@ public class ProfileQueryService(IProfileRepository ProfileRepository)
         return await ProfileRepository.FindByEmailAsync(email);
     }
 
+    public async Task<Profile?> GetByUserIdAsync(int userId)
+    {
+        return await ProfileRepository.FindByUserIdAsync(userId);
+    }
     /// <inheritdoc />
     public async Task<IEnumerable<Profile>> GetByHotelIdAsync(int hotelId)
     {
