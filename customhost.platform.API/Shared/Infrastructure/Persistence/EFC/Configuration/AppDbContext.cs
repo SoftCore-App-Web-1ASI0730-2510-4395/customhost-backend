@@ -27,9 +27,9 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<Rol> Roles { get; set; }
     
     // Guest Experience DbSets
-    public DbSet<IoTDevice> IoTDevices { get; set; }
-    public DbSet<RoomDevice> RoomDevices { get; set; }
-    public DbSet<RoomDevicePreference> RoomDevicePreferences { get; set; }
+    public DbSet<DeviceModel> DeviceModels { get; set; }
+    public DbSet<Device> Devices { get; set; }
+    public DbSet<DevicePreference> DevicePreferences { get; set; }
     public DbSet<UserDevicePreference> UserDevicePreferences { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
