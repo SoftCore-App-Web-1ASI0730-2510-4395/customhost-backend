@@ -198,21 +198,21 @@ builder.Services.AddScoped<IBillingsContextFacade, BillingsContextFacade>();
 
 // GuestExperience Bounded Context
 // Repositories
-builder.Services.AddScoped<IIoTDeviceRepository, IoTDeviceRepository>();
-builder.Services.AddScoped<IRoomDeviceRepository, RoomDeviceRepository>();
-builder.Services.AddScoped<IRoomDevicePreferenceRepository, RoomDevicePreferenceRepository>();
+builder.Services.AddScoped<IDeviceModelRepository, DeviceModelRepository>();
+builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+builder.Services.AddScoped<IDevicePreferenceRepository, DevicePreferenceRepository>();
 builder.Services.AddScoped<IUserDevicePreferenceRepository, UserDevicePreferenceRepository>();
 
 // Command Services
-builder.Services.AddScoped<IIoTDeviceCommandService, IoTDeviceCommandService>();
-builder.Services.AddScoped<IRoomDeviceCommandService, RoomDeviceCommandService>();
-builder.Services.AddScoped<IRoomDevicePreferenceCommandService, RoomDevicePreferenceCommandService>();
+builder.Services.AddScoped<IDeviceModelCommandService, DeviceModelCommandService>();
+builder.Services.AddScoped<IDeviceCommandService, DeviceCommandService>();
+builder.Services.AddScoped<IDevicePreferenceCommandService, DevicePreferenceCommandService>();
 builder.Services.AddScoped<IUserDevicePreferenceCommandService, UserDevicePreferenceCommandService>();
 
 // Query Services
-builder.Services.AddScoped<IIoTDeviceQueryService, IoTDeviceQueryService>();
-builder.Services.AddScoped<IRoomDeviceQueryService, RoomDeviceQueryService>();
-builder.Services.AddScoped<IRoomDevicePreferenceQueryService, RoomDevicePreferenceQueryService>();
+builder.Services.AddScoped<IDeviceModelQueryService, DeviceModelQueryService>();
+builder.Services.AddScoped<IDeviceQueryService, DeviceQueryService>();
+builder.Services.AddScoped<IDevicePreferenceQueryService, DevicePreferenceQueryService>();
 builder.Services.AddScoped<IUserDevicePreferenceQueryService, UserDevicePreferenceQueryService>();
 
 
