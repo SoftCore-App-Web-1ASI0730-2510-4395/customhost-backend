@@ -25,4 +25,22 @@ public class SubscriptionCommandService(ISubscriptionRepository subscriptionRepo
        
         return Subscription;
     }
+    
+    
+    public async Task<bool> Handle(DeleteSubscriptionCommand command)
+    {
+        try
+        {
+            var payment = await subscriptionRepository.FindByIdAsync(command.Id);
+            if (payment == null) return false;
+
+            subscriptionRepository.Remove(payment);
+            await unitOfWork.CompleteAsync();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
