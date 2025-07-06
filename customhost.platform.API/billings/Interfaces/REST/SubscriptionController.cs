@@ -1,9 +1,12 @@
 using System.Net.Mime;
+using customhost_backend.billings.Application.Internal.CommandServices;
+using customhost_backend.billings.Domain.Models.Commands;
 using customhost_backend.billings.Domain.Services;
 using customhost_backend.billings.Interfaces.REST.Resources;
 using customhost_backend.billings.Interfaces.REST.Transform;
 using customhost.platform.API.billings.Domain.Models.Queries;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace customhost_backend.billings.Interfaces.REST;
 
@@ -28,6 +31,24 @@ public class SubscriptionController(ISubscriptionCommandService subscriptionComm
         var subscription = await subscriptionQueryService.Handle(new GetAllSubscriptionsQuery());
         var resources = subscription.Select(SubscriptionResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
+    }
+    
+    [HttpDelete("{id:int}")]
+    [SwaggerOperation(
+        Summary = "Delete subscription",
+        Description = "Deletes a subscription from the system.",
+        OperationId = "DeleteSubscription")]
+    [SwaggerResponse(200, "Subscription deleted successfully")]
+    [SwaggerResponse(404, "Subscription not found", null)]
+    [SwaggerResponse(400, "Subscription deletion failed", null)]
+    public async Task<ActionResult> DeleteSubscription(int id)
+    {
+        var command = new DeleteSubscriptionCommand(id);
+        var result = await subscriptionCommandService.Handle(command);
+        if (!result)
+            return NotFound($"Subscription with ID {id} not found.");
+
+        return Ok($"Subscription with ID {id} deleted successfully.");
     }
     
 }
