@@ -1,4 +1,5 @@
 using customhost_backend.crm.Domain.Models.Aggregates;
+using customhost_backend.crm.Domain.Models.Queries;
 using customhost_backend.crm.Domain.Repositories;
 using customhost_backend.crm.Domain.Services;
 
@@ -27,6 +28,10 @@ public class RoomQueryService(IRoomRepository roomRepository) : IRoomQueryServic
         return await roomRepository.FindByHotelIdAsync(hotelId);
     }
 
+    public async Task<IEnumerable<Room>> Handle(GetAllRoomsByHotelIdQuery query)
+    {
+        return await roomRepository.FindByHotelIdAsync(query.hotelId);
+    }
     /// <inheritdoc />
     public async Task<Room?> GetByRoomNumberAsync(int roomNumber)
     {
