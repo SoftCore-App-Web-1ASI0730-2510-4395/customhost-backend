@@ -118,33 +118,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
             .LogTo(Console.WriteLine, LogLevel.Error);
 });
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.EnableAnnotations(); 
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "bearer"
-    });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-});
+builder.Services.AddSwaggerGen(options=> { options.EnableAnnotations(); });
 
 // Dependency Injection
 
