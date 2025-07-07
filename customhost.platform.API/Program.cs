@@ -56,14 +56,8 @@ var port = Environment.GetEnvironmentVariable("PORT");
 if (!string.IsNullOrEmpty(port))
     builder.WebHost.UseUrls($"http://*:{port}");
 
-Console.WriteLine("Configuration Sources:");
-foreach (var source in builder.Configuration.Sources)
-{
-    Console.WriteLine(source.ToString());
-}
 
-Console.WriteLine("Connection String: " + 
-                  (builder.Configuration.GetConnectionString("DefaultConnection") ?? "NOT FOUND"));
+
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -76,21 +70,14 @@ builder.Services.AddControllers(options => options.Conventions.Add(new KebabCase
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                       ?? Environment.GetEnvironmentVariable("RAILWAY_DATABASE_URL")
-                       ?? Environment.GetEnvironmentVariable("MYSQLDATABASEURL");
-
+    ?? Environment.GetEnvironmentVariable("RAILWAY_DATABASE_URL")
+    ?? Environment.GetEnvironmentVariable("MYSQLDATABASEURL");
 //Add CORS Policy for Frontend Integration
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontendPolicy",
-        policy => policy.WithOrigins(
-                "http://localhost:3000",
-                "http://localhost:5173",
-                "http://127.0.0.1:3000",
-                "http://127.0.0.1:5173",
-                "https://customhost-frontend-hend.vercel.app/"
-            )
+        policy => policy.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
@@ -119,7 +106,33 @@ builder.Services.AddDbContext<AppDbContext>(options =>
             .LogTo(Console.WriteLine, LogLevel.Error);
 });
 
-builder.Services.AddSwaggerGen(options=> { options.EnableAnnotations(); });
+builder.Services.AddSwaggerGen(options =>
+{
+    options.EnableAnnotations(); 
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 // Dependency Injection
 
@@ -241,11 +254,16 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDbContext>();
     context.Database.EnsureCreated();
+    
+    // Initialize default roles
+    var roleInitializationService = services.GetRequiredService<RoleInitializationService>();
+    await roleInitializationService.InitializeDefaultRolesAsync();
 }
 
-// Apply CORS Policy - Use specific frontend policy in production
+// Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
+
 
 // Apply CORS Policy - Use specific frontend policy in production
 if (app.Environment.IsDevelopment())
@@ -257,11 +275,9 @@ else
     app.UseCors("AllowFrontendPolicy"); // Restricted to frontend origins
 }
 
-// Aplica redirección HTTPS solo en desarrollo
-if (app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
+app.UseRequestAuthorization();
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
