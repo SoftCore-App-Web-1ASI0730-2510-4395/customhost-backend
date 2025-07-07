@@ -103,6 +103,7 @@ else if (builder.Environment.IsProduction())
                 .EnableDetailedErrors();
         });
 
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.EnableAnnotations(); 
