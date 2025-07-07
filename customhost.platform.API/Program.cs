@@ -39,6 +39,7 @@ using customhost_backend.IAM.Domain.Repositories;
 using customhost_backend.IAM.Domain.Services;
 using customhost_backend.IAM.Infrastructure.Hashing.BCrypt.Services;
 using customhost_backend.IAM.Infrastructure.Persistence.EFC.Repositories;
+using customhost_backend.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 using customhost_backend.IAM.Infrastructure.Tokens.JWT.Configuration;
 using customhost_backend.IAM.Infrastructure.Tokens.JWT.Services;
 using customhost_backend.IAM.Interfaces.ACL;
@@ -292,12 +293,10 @@ app.UseSwaggerUI(c =>
 
 // Apply CORS Policy - Use specific frontend policy in production
 
-//app.UseRequestAuthorization();
-
-//app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
+app.UseHttpsRedirection();
+app.UseRouting(); 
+app.UseRequestAuthorization(); 
+app.UseAuthorization(); 
 app.MapControllers();
 
 app.Run();
