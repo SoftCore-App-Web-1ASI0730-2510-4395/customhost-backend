@@ -277,7 +277,7 @@ else
 
 app.UseRequestAuthorization();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
