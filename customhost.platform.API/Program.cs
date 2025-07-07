@@ -77,7 +77,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontendPolicy",
-        policy => policy.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173", "https://customhost-frontend-hend.vercel.app")
+        policy => policy.WithOrigins(
+            "http://localhost:3000",
+            "http://localhost:5173",
+            "http://127.0.0.1:3000",
+            "http://127.0.0.1:5173",
+            "https://customhost-app.vercel.app",
+            "https://customhost-frontend-hend.vercel.app" // <-- Agregado tu frontend en Vercel
+        )
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
