@@ -39,7 +39,6 @@ using customhost_backend.IAM.Domain.Repositories;
 using customhost_backend.IAM.Domain.Services;
 using customhost_backend.IAM.Infrastructure.Hashing.BCrypt.Services;
 using customhost_backend.IAM.Infrastructure.Persistence.EFC.Repositories;
-using customhost_backend.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 using customhost_backend.IAM.Infrastructure.Tokens.JWT.Configuration;
 using customhost_backend.IAM.Infrastructure.Tokens.JWT.Services;
 using customhost_backend.IAM.Interfaces.ACL;
@@ -73,35 +72,35 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontendPolicy",
-        policy => policy.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173")
-            .AllowAnyMethod()
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://customhost-frontend-hend.vercel.app", "http://localhost:5173")//ajustar
             .AllowAnyHeader()
-            .AllowCredentials());
-    
-    // Keep AllowAll for development/testing purposes
-    options.AddPolicy("AllowAllPolicy",
-        policy => policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+            .AllowAnyMethod();
+    });
 });
-
 
 if(connectionString== null) throw new InvalidOperationException("Connection string not found.");
 
 
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    if (builder.Environment.IsDevelopment())
-        options.UseMySQL(connectionString)
-            .LogTo(Console.WriteLine, LogLevel.Information)
-            .EnableSensitiveDataLogging()
-            .EnableDetailedErrors();
-    else if (builder.Environment.IsProduction())
-        options.UseMySQL(connectionString)
-            .LogTo(Console.WriteLine, LogLevel.Error);
-});
+if (builder.Environment.IsDevelopment())
+    builder.Services.AddDbContext<AppDbContext>(
+        options =>
+        {
+            options.UseMySQL(connectionString)
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
+        });
+else if (builder.Environment.IsProduction())
+    builder.Services.AddDbContext<AppDbContext>(
+        options =>
+        {
+            options.UseMySQL(connectionString)
+                .LogTo(Console.WriteLine, LogLevel.Error)
+                .EnableDetailedErrors();
+        });
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -128,7 +127,26 @@ builder.Services.AddSwaggerGen(options =>
             },
             Array.Empty<string>()
         }
-    });
+    }
+    );
+    options.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "CustomHost_Backend",
+            Version = "v1",
+            Description = "CustomHost Backend API",
+            TermsOfService = new Uri("https://customhost-pltaform.com/tos"),
+            Contact = new OpenApiContact
+            {
+                Name = "CustomHost Studios",
+                Email = "CustomHost.com"
+            },
+            License = new OpenApiLicense
+            {
+                Name = "CustomHost",
+                Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+            }
+        });
 });
 
 // Dependency Injection
@@ -258,26 +276,24 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi2_0;
+});
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+    c.RoutePrefix = string.Empty; 
+    c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+});
 
 // Apply CORS Policy - Use specific frontend policy in production
-if (app.Environment.IsDevelopment())
-{
-    app.UseCors("AllowAllPolicy"); // More permissive for development
-}
-else
-{
-    app.UseCors("AllowFrontendPolicy"); // Restricted to frontend origins
-}
 
-app.UseRequestAuthorization();
+//app.UseRequestAuthorization();
 
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
