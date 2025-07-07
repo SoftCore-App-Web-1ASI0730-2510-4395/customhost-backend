@@ -83,7 +83,8 @@ builder.Services.AddCors(options =>
             "http://127.0.0.1:3000",
             "http://127.0.0.1:5173",
             "https://customhost-app.vercel.app",
-            "https://customhost-frontend-hend.vercel.app" // <-- Agregado tu frontend en Vercel
+            "https://customhost-frontend-hend.vercel.app",
+            "https://customhost-frontend-hend.vercel.app/iam/register"
         )
             .AllowAnyMethod()
             .AllowAnyHeader()
