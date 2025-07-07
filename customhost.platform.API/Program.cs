@@ -84,7 +84,8 @@ builder.Services.AddCors(options =>
             "http://127.0.0.1:5173",
             "https://customhost-app.vercel.app",
             "https://customhost-frontend-hend.vercel.app",
-            "https://customhost-frontend-hend.vercel.app/iam/register"
+            "https://customhost-frontend-hend.vercel.app/iam/register",
+            "https://temp-front-sigma.vercel.app"
         )
             .AllowAnyMethod()
             .AllowAnyHeader()
@@ -283,8 +284,8 @@ else
     app.UseCors("AllowAllPolicy"); // Restricted to frontend origins
 }
 
-app.UseCors(app.Environment.IsDevelopment() ? "AllowAllPolicy" : "AllowFrontendPolicy");
 
+app.UseCors("AllowAllPolicy");
 
 //app.UseRequestAuthorization();
 
