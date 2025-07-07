@@ -2,36 +2,20 @@ using customhost_backend.crm.Domain.Models.ValueObjects;
 
 namespace customhost_backend.crm.Domain.Models.Commands;
 
-public record CreateRoomCommand
-{
-    public ERoomStatus Status { get; set; }
-    public int RoomNumber { get; set; }
-    public ERoomType Type { get; set; }
-    public int HotelId { get; set; }
-
-    public CreateRoomCommand(int roomNumber, ERoomStatus status, ERoomType type, int hotelId)
-    {
-        if (roomNumber < 0)
-        {
-            throw new ArgumentException("Room number must be a positive integer.", nameof(roomNumber));
-        }
-        if (hotelId < 0)
-        {
-            throw new ArgumentException("Hotel ID must be a positive integer.", nameof(hotelId));
-        }
-        if (!Enum.IsDefined(typeof(ERoomType), type))
-        {
-            throw new ArgumentException("Invalid room type.", nameof(type));
-        }
-        if (!Enum.IsDefined(typeof(ERoomStatus), status))
-        {
-            throw new ArgumentException("Invalid room status.", nameof(status));
-        }
-        
-        RoomNumber = roomNumber;
-        Status = status;
-        Type = type;
-        HotelId = hotelId;
-        
-    }
-};
+/// <summary>
+/// Create Room Command
+/// </summary>
+/// <param name="RoomNumber">Room number</param>
+/// <param name="Status">Room status</param>
+/// <param name="Type">Room type</param>
+/// <param name="HotelId">Hotel ID</param>
+/// <param name="Price">Room price per night</param>
+/// <param name="Floor">Floor number</param>
+public record CreateRoomCommand(
+    int RoomNumber,
+    ERoomStatus Status,
+    ERoomType Type,
+    int HotelId,
+    decimal Price,
+    int Floor
+);
