@@ -293,9 +293,10 @@ app.UseSwaggerUI(c =>
 
 // Apply CORS Policy - Use specific frontend policy in production
 
-app.UseCors();
+
 app.UseHttpsRedirection();
 app.UseRouting(); 
+app.UseCors();
 app.UseRequestAuthorization(); 
 app.UseAuthorization(); 
 app.MapControllers();
