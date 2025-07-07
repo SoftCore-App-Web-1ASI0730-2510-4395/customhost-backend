@@ -280,7 +280,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseCors("AllowFrontendPolicy"); // Restricted to frontend origins
+    app.UseCors("AllowAllPolicy"); // Restricted to frontend origins
 }
 
 //app.UseRequestAuthorization();
