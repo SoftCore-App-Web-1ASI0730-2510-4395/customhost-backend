@@ -283,6 +283,9 @@ else
     app.UseCors("AllowAllPolicy"); // Restricted to frontend origins
 }
 
+app.UseCors(app.Environment.IsDevelopment() ? "AllowAllPolicy" : "AllowFrontendPolicy");
+
+
 //app.UseRequestAuthorization();
 
 app.UseHttpsRedirection();
